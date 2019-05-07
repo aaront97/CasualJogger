@@ -1,15 +1,15 @@
 package sample;
 
 import org.json.JSONObject;
-import sun.misc.IOUtils;
-import java.io.*;
-import java.net.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class GoogleAPI {
 
@@ -20,8 +20,7 @@ public class GoogleAPI {
         this.apiKey = apiKey;
     }
 
-    public Map<String, String> getCoord(String city) {
-        Map<String, String> result = new HashMap<>();
+    public LatLonInfo getCoord(String city) {
         if (apiKey == null) {
             try {
                 String apiKeysString = new String(
@@ -56,10 +55,10 @@ public class GoogleAPI {
                     properties.getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
             String formatted_address = properties.getString("formatted_address");
 
-
-            result.put("latitude", latitude);
-            result.put("longitude", longitude);
-            result.put("address", formatted_address);
+            LatLonInfo result = new LatLonInfo();
+            result.lat = Double.parseDouble(latitude);
+            result.lon = Double.parseDouble(longitude);
+            result.address = formatted_address;
             return result;
         }
         catch(Exception e) {
