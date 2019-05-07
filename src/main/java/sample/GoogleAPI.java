@@ -1,26 +1,26 @@
 package sample;
 
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 import sun.misc.IOUtils;
-
 import java.io.*;
 import java.net.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.Map;
 
 public class GoogleAPI {
 
     private static final String address = "https://maps.googleapis.com/maps/api/geocode/json";
-    private static String apiKey ;
+    private String apiKey ;
 
-    public static Map<String, String> getCoord(String city) {
+    GoogleAPI(String apiKey){
+        this.apiKey = apiKey;
+    }
+
+    public Map<String, String> getCoord(String city) {
         Map<String, String> result = new HashMap<>();
         if (apiKey == null) {
             try {
@@ -69,8 +69,5 @@ public class GoogleAPI {
 
     }
 
-    public static void main(String[] args) {
-        Map<String, String> s = getCoord("Pennsylvania, US");
-        System.out.println(s);
-    }
+
 }

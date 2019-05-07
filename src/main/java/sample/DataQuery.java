@@ -1,9 +1,11 @@
 package sample;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
 
 import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class DataQuery {
 
@@ -13,13 +15,16 @@ public class DataQuery {
         String darkSkyKey = "";
         String googleKey = "";
 
-        JSONParser jsonParser = new JSONParser();
-        try {
-            JSONObject json = (JSONObject) jsonParser.parse(new FileReader("apiKeys.json"));
 
-            breezometerKey = (String) json.get("breezometer");
-            darkSkyKey = (String) json.get("darkSky");
-            googleKey = (String) json.get("google");
+        try {
+
+            String apiKeysString = new String(
+                    Files.readAllBytes(Paths.get(System.getProperty("user.dir") +"\\src\\main\\java\\sample\\apiKeys.json")));
+            JSONObject apiKeys = new JSONObject(apiKeysString);
+            breezometerKey = apiKeys.getString("breezometer");
+            darkSkyKey = apiKeys.getString("darkSky");
+            googleKey = apiKeys.getString("google");
+
 
         } catch (Exception e) {
             System.out.println("An error while reading API keys from JSON");
