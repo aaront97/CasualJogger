@@ -7,7 +7,7 @@ import java.io.FileReader;
 
 public class DataQuery {
 
-    public static WeatherData queryData(String cityName) {
+    public static sample.WeatherData queryData(String cityName) {
 
         String breezometerKey = "";
         String darkSkyKey = "";
