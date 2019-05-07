@@ -1,4 +1,4 @@
-package sample;
+package sample.api;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,7 +9,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -190,9 +189,7 @@ public class BreezometerAPI {
     }
 
     public static void main(String[] args){
-        String key = "39c2d17a2ceb411796fe9b63c79d1197";
-        String latitude = "43.3616211";
-        String longitude = "-80.3144276";
+        s
 //        String AQFutureURL = "https://api.breezometer.com/air-quality/v2/historical/hourly?lat={lat}&lon={lon}&key={key}";
 //        AQFutureURL = AQFutureURL.replace("{lat}", latitude);
 //        AQFutureURL = AQFutureURL.replace("{lon}", longitude);

@@ -1,4 +1,4 @@
-package sample;
+package sample.api;
 
 public class BreezometerRecord {
     public String datetime;
