@@ -2,9 +2,7 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
-import javafx.stage.Window;
 
 public class Controller {
 
