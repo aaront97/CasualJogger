@@ -1,4 +1,4 @@
-package sample;
+package sample.api;
 
 import org.json.JSONObject;
 
@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class DataQuery {
 
-    public static sample.WeatherData queryData(String cityName) {
+    public static WeatherData queryData(String cityName) {
 
         String breezometerKey = "";
         String darkSkyKey = "";
