@@ -47,6 +47,7 @@ public class GoogleAPI {
                 json_response.append(line);
             }
             response = new JSONObject(json_response.toString());
+            con.disconnect();
 
             JSONObject properties = response.getJSONArray("results").getJSONObject(0);
             String latitude = String.valueOf(

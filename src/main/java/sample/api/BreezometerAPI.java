@@ -172,7 +172,7 @@ public class BreezometerAPI {
 
 
 
-    public JSONObject getJSONObject(URL url) throws ProtocolException, IOException {
+    private JSONObject getJSONObject(URL url) throws IOException {
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
         con.setRequestMethod("GET");
         BufferedReader input = new BufferedReader(
@@ -189,7 +189,9 @@ public class BreezometerAPI {
     }
 
     public static void main(String[] args){
-        s
+        //input API key
+        String latitude = "52.205338";
+        String longitude = "0.121817";
 //        String AQFutureURL = "https://api.breezometer.com/air-quality/v2/historical/hourly?lat={lat}&lon={lon}&key={key}";
 //        AQFutureURL = AQFutureURL.replace("{lat}", latitude);
 //        AQFutureURL = AQFutureURL.replace("{lon}", longitude);
