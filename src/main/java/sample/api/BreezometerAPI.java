@@ -188,19 +188,19 @@ public class BreezometerAPI {
         return response;
     }
 
-    public static void main(String[] args){
-        s
-//        String AQFutureURL = "https://api.breezometer.com/air-quality/v2/historical/hourly?lat={lat}&lon={lon}&key={key}";
-//        AQFutureURL = AQFutureURL.replace("{lat}", latitude);
-//        AQFutureURL = AQFutureURL.replace("{lon}", longitude);
-//        AQFutureURL = AQFutureURL.replace("{key}", key);
-//        AQFutureURL += "&hours=" + String.valueOf(2);
-
-        BreezometerAPI test = new BreezometerAPI(key, latitude, longitude);
-        for(BreezometerRecord r: test.getPollenCount()){
-            System.out.println(r);
-        }
-
-
-    }
+//    public static void main(String[] args){
+//
+////        String AQFutureURL = "https://api.breezometer.com/air-quality/v2/historical/hourly?lat={lat}&lon={lon}&key={key}";
+////        AQFutureURL = AQFutureURL.replace("{lat}", latitude);
+////        AQFutureURL = AQFutureURL.replace("{lon}", longitude);
+////        AQFutureURL = AQFutureURL.replace("{key}", key);
+////        AQFutureURL += "&hours=" + String.valueOf(2);
+//
+//        BreezometerAPI test = new BreezometerAPI(key, latitude, longitude);
+//        for(BreezometerRecord r: test.getPollenCount()){
+//            System.out.println(r);
+//        }
+//
+//
+//    }
 }
