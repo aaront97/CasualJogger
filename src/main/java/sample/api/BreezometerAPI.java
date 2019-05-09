@@ -7,10 +7,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class BreezometerAPI {
     private static final int nextDays = 2;
@@ -188,21 +190,20 @@ public class BreezometerAPI {
         return response;
     }
     
-    public static void main(String[] args){
-        //input API key
-        String latitude = "52.205338";
-        String longitude = "0.121817";
+//    public static void main(String[] args) {
+//        //input API key
+//        String latitude = "52.205338";
+//        String longitude = "0.121817";
 //        String AQFutureURL = "https://api.breezometer.com/air-quality/v2/historical/hourly?lat={lat}&lon={lon}&key={key}";
 //        AQFutureURL = AQFutureURL.replace("{lat}", latitude);
 //        AQFutureURL = AQFutureURL.replace("{lon}", longitude);
 //        AQFutureURL = AQFutureURL.replace("{key}", key);
 //        AQFutureURL += "&hours=" + String.valueOf(2);
-
-        BreezometerAPI test = new BreezometerAPI(key, latitude, longitude);
-        for(BreezometerRecord r: test.getPollenCount()){
-            System.out.println(r);
-        }
-
-
-    }
-
+//
+//        BreezometerAPI test = new BreezometerAPI(key, latitude, longitude);
+//        for (BreezometerRecord r : test.getPollenCount()) {
+//            System.out.println(r);
+//        }
+//
+//    }
+}

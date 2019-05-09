@@ -3,6 +3,7 @@ package sample.api;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class DarkSkyData {
@@ -47,5 +48,23 @@ public class DarkSkyData {
             System.err.println("Something went wrong while parsing DarkSky response JSON");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        Field[] fields = getClass().getFields();
+        StringBuilder s = new StringBuilder("{ ");
+        for (Field field : fields) {
+            try {
+                s.append(field.getName());
+                s.append(" = ");
+                s.append(field.get(this));
+                s.append(" , ");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        s.append("}");
+        return s.toString();
     }
 }
