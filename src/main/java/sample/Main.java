@@ -16,7 +16,7 @@ public class Main extends Application {
         DataQuery.queryData("asd");
         //
 
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 540));
         primaryStage.show();

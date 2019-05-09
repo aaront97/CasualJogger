@@ -187,7 +187,7 @@ public class BreezometerAPI {
         con.disconnect();
         return response;
     }
-
+    
     public static void main(String[] args){
         //input API key
         String latitude = "52.205338";
@@ -205,4 +205,4 @@ public class BreezometerAPI {
 
 
     }
-}
+
