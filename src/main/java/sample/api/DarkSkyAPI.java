@@ -2,10 +2,8 @@ package sample.api;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class DarkSkyAPI {
 
@@ -24,31 +22,31 @@ public class DarkSkyAPI {
         }
 
         // Basic query
-        String completeAddress = address + darkSkyKey + "/" + latLonInfo.lat + "," + latLonInfo.lon;
+        String addressParameters = address + darkSkyKey + "/" + latLonInfo.lat + "," + latLonInfo.lon;
 
         //Adding flags
-        completeAddress += "?extend=hourly&units=uk2";
+        String completeAddress = addressParameters + "?extend=hourly&units=uk2";
 
         try {
             System.out.println("Complete Address: " + completeAddress);
-            URL url = new URL(completeAddress);
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setRequestMethod("GET");
-            BufferedReader input = new BufferedReader(
-                    new InputStreamReader(con.getInputStream())
-            );
-            StringBuffer json_response = new StringBuffer();
-            String line;
-            while((line = input.readLine()) != null){
-                json_response.append(line);
-            }
-            JSONObject response = new JSONObject(json_response.toString());
-            return new DarkSkyData(response);
+            JSONObject response = APIUtils.getJsonFromUrl(completeAddress);
+
+            DarkSkyData darkSkyData = new DarkSkyData(response);
+
+            // For previous data
+            Timestamp ts = new Timestamp(new Date().getTime());
+            String previousDataAddress = addressParameters+ "," + ts.getTime() / 1000;
+            previousDataAddress += "?exclude=currently&units=uk2";
+            System.out.println(previousDataAddress);
+            response = APIUtils.getJsonFromUrl(previousDataAddress);
+            darkSkyData.addPrevious(response);
+
+            return darkSkyData;
+
         } catch (Exception e) {
             System.err.println("Something went wrong while looking up Dark Sky");
             e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 }
