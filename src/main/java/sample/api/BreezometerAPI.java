@@ -63,16 +63,19 @@ public class BreezometerAPI {
                 JSONObject types = object.getJSONObject("types");
                 Iterator<String> iterator = types.keys();
                 int total_pc = 0;
+                int no_of_plants = 0;
                 while(iterator.hasNext()){
                     String key = iterator.next();
                     if (types.get(key) instanceof JSONObject) {
                         JSONObject child = (JSONObject)types.get(key);
                         if(child.getBoolean("in_season")){
                             total_pc += child.getJSONObject("index").getInt("value");
+                            no_of_plants++;
                         }
                     }
                 }
-                result.add(new BreezometerRecord(date, "Pollen", total_pc));
+                double avg_pc = Math.ceil((double)total_pc  / no_of_plants);
+                result.add(new BreezometerRecord(date, "Pollen", (int)avg_pc ));
             }
             return result;
         }
@@ -137,32 +140,48 @@ public class BreezometerAPI {
                 }
             }
 
-            BreezometerRecord maxToday = new BreezometerRecord("0", "0", Integer.MIN_VALUE);
-            BreezometerRecord maxTomorrow = new BreezometerRecord("0", "0", Integer.MIN_VALUE);
-            BreezometerRecord maxAfterTomorrow = new BreezometerRecord("0", "0", Integer.MIN_VALUE);
+            BreezometerRecord maxTomorrow = new BreezometerRecord("0", "max", Integer.MIN_VALUE);
+            BreezometerRecord maxAfterTomorrow = new BreezometerRecord("0", "max", Integer.MIN_VALUE);
 
-            for(JSONObject object : today){
-                int value = object.getJSONObject("indexes").getJSONObject("baqi").getInt("aqi");
-                if(value > maxToday.value){
-                    maxToday = new BreezometerRecord(object.getString("datetime"), "AQ", value );
-                }
-            }
+
             for(JSONObject object : tomorrow){
                 int value = object.getJSONObject("indexes").getJSONObject("baqi").getInt("aqi");
                 if(value > maxTomorrow.value){
-                    maxTomorrow = new BreezometerRecord(object.getString("datetime"), "AQ", value );
+                    maxTomorrow.datetime = object.getString("datetime");
+                    maxTomorrow.value = value;
                 }
             }
             for(JSONObject object : afterTomorrow){
                 int value = object.getJSONObject("indexes").getJSONObject("baqi").getInt("aqi");
                 if(value > maxAfterTomorrow.value){
-                    maxAfterTomorrow = new BreezometerRecord(object.getString("datetime"), "AQ", value );
+                    maxAfterTomorrow.datetime = object.getString("datetime");
+                    maxAfterTomorrow.value = value;
                 }
             }
+
+            BreezometerRecord minTomorrow = new BreezometerRecord("0", "min", Integer.MAX_VALUE);
+            BreezometerRecord minAfterTomorrow = new BreezometerRecord("0", "min", Integer.MAX_VALUE);
+
+            for(JSONObject object : tomorrow){
+                int value = object.getJSONObject("indexes").getJSONObject("baqi").getInt("aqi");
+                if(value < minTomorrow.value){
+                    minTomorrow.datetime = object.getString("datetime");
+                    minTomorrow.value = value;
+                }
+            }
+            for(JSONObject object : afterTomorrow){
+                int value = object.getJSONObject("indexes").getJSONObject("baqi").getInt("aqi");
+                if(value < minAfterTomorrow.value){
+                    minAfterTomorrow.datetime = object.getString("datetime");
+                    minAfterTomorrow.value = value;
+                }
+            }
+
             List<BreezometerRecord> result = new LinkedList<>();
-            result.add(maxToday);
             result.add(maxTomorrow);
             result.add(maxAfterTomorrow);
+            result.add(minTomorrow);
+            result.add(minAfterTomorrow);
             return result;
         }
         catch(Exception e){

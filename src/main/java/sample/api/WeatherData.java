@@ -2,8 +2,12 @@ package sample.api;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class WeatherData {
+
+    private static final HashMap<Integer, String> pollenLookupTable = new HashMap<>();
 
     public int timestamp;
 
@@ -22,7 +26,9 @@ public class WeatherData {
     public double currentWindBearing;
     public int currentUV;
     public double currentAQI;
+    public String currentPollen;
     // TODO Pollen
+
 
     // 0 -> tomorrow, 1 -> day after tomorrow (no today!!!)
     public double[] maxWindSpeedForecast = new double[2];
@@ -33,21 +39,64 @@ public class WeatherData {
     public int[] maxAQITime = new int[2];
     public int[] minAQIForecast = new int[2];
     public int[] minAQITime = new int[2];
-    // TODO pollen
+
+    //we have no time for pollen - only one data reading per day
+    //pollen arranged to qualitative values per day
+    public String[] pollen = new String[2];
 
     // 0 -> today, 1-> tomorrow, 2-> day after tomorrow
     public int[] sunriseTimes = new int[3];
     public int[] sunsetTimes = new int[3];
 
-    WeatherData(DarkSkyData darkSkyData, BreezometerAPI breezometerRecord) {
+    WeatherData(DarkSkyData darkSkyData, BreezometerAPI breezometerData) {
         timestamp = darkSkyData.currently.time;
         currentTemperature = darkSkyData.currently.temperature;
         currentApparentTemperature = darkSkyData.currently.apparentTemperature;
         currentWindSpeed = darkSkyData.currently.windSpeed;
         currentWindBearing = darkSkyData.currently.windBearing;
         currentUV = darkSkyData.currently.uvIndex;
-        // TODO AQI
+        currentAQI = breezometerData.getCurrentAirQuality();
+        List<BreezometerRecord> records = breezometerData.getFutureAirQuality();
+        //assumes order of linked list
+        for(int i = 0; i < records.size(); i++){
+            if(records.get(i).key.equals("max")){
+                //TODO Format as String or integer?
+                //maxAQITime[i] = records.get(i)
+                System.out.println(i);
+                maxAQIForecast[i] = records.get(i).value;
+            }
+            else{
+                //minAQITime[i - minAQITime.length] = records.get(i)
+                minAQIForecast[i-minAQIForecast.length] = records.get(i).value;
+            }
+        }
 
+        //POLLEN
+        pollenLookupTable.put(1, "Very Low");
+        pollenLookupTable.put(2, "Low");
+        pollenLookupTable.put(3, "Moderate");
+        pollenLookupTable.put(4, "High");
+        pollenLookupTable.put(5, "Very High");
+
+        List<BreezometerRecord> pollenReadings = breezometerData.getPollenCount();
+        for(int i = 0; i < pollenReadings.size(); i++){
+            int value = pollenReadings.get(i).value;
+            String result;
+            if(value < 1){
+                result = "Negligible";
+            }
+            else{
+                result = pollenLookupTable.getOrDefault(value, "Very High");
+            }
+
+            if(i == 0 ){
+                currentPollen = result;
+            }
+            else{
+                pollen[i - 1] = result;
+            }
+
+        }
         for (int i = 0; i < 60; i++) {
             immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
         }
