@@ -2,17 +2,16 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 
 public class Controller {
 
     @FXML
-    private TextArea bigTextArea;
+    Label NotifictionLabel;
 
     @FXML
     protected void ClickMeHandler(Event event) {
-        bigTextArea.setText("You have clicked me! Here's a cookie as a reward :) Blah blah " +
-                ";sakfajkbrfk,wbfjwebfgajrs,hasmjrhgbUIRWGWlefh,kEWFH,WEFJ");
+        System.out.println("Test");
 //        Window owner = bigTextArea.getScene().getWindow();
 //        Alert alert = new Alert(Alert.AlertType.ERROR);
 //        alert.setTitle("No more cookies :(");

@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
-import java.awt.*;
-
 public class Main extends Application {
 
     @Override
@@ -21,9 +19,8 @@ public class Main extends Application {
         //
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("sample.fxml"));
-        Button refresh = new Button("Refresh");
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 540));
+        primaryStage.setScene(new Scene(root, 310, 540));
         primaryStage.show();
     }
 
