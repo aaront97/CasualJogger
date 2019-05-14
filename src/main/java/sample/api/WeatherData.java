@@ -36,9 +36,9 @@ public class WeatherData {
     public int[] maxUVForecast = new int[2];
     public int[] maxUVTime = new int[2];
     public int[] maxAQIForecast = new int[2];
-    public int[] maxAQITime = new int[2];
+    public String[] maxAQITime = new String[2];
     public int[] minAQIForecast = new int[2];
-    public int[] minAQITime = new int[2];
+    public String[] minAQITime = new String[2];
 
     //we have no time for pollen - only one data reading per day
     //pollen arranged to qualitative values per day
@@ -60,13 +60,11 @@ public class WeatherData {
         //assumes order of linked list
         for(int i = 0; i < records.size(); i++){
             if(records.get(i).key.equals("max")){
-                //TODO Format as String or integer?
-                //maxAQITime[i] = records.get(i)
-                System.out.println(i);
+                maxAQITime[i] = records.get(i).datetime;
                 maxAQIForecast[i] = records.get(i).value;
             }
             else{
-                //minAQITime[i - minAQITime.length] = records.get(i)
+                minAQITime[i - minAQITime.length] = records.get(i).datetime;
                 minAQIForecast[i-minAQIForecast.length] = records.get(i).value;
             }
         }

@@ -20,5 +20,6 @@
    <children>
       <TextArea fx:id="bigTextArea" prefHeight="200.0" prefWidth="287.0" GridPane.columnIndex="1" />
       <Button mnemonicParsing="false" onAction="#ClickMeHandler" text="Click me!" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
    </children>
 </GridPane>
