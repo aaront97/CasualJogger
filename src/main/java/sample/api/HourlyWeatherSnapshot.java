@@ -2,6 +2,8 @@ package sample.api;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+
 public class HourlyWeatherSnapshot {
 
     public int time;
@@ -34,4 +36,21 @@ public class HourlyWeatherSnapshot {
         visibility = APIUtils.tryToGetDouble(jsonObject, "visibility");
     }
 
+    @Override
+    public String toString() {
+        Field[] fields = getClass().getFields();
+        StringBuilder s = new StringBuilder("{ ");
+        for (Field field : fields) {
+            try {
+                s.append(field.getName());
+                s.append(" = ");
+                s.append(field.get(this));
+                s.append(" , ");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        s.append("}");
+        return s.toString();
+    }
 }

@@ -2,6 +2,8 @@ package sample.api;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Field;
+
 public class DailyWeatherSnapshot {
 
     public int time;
@@ -50,5 +52,23 @@ public class DailyWeatherSnapshot {
         apparentTemperatureLow = APIUtils.tryToGetDouble(jsonObject, "apparentTemperatureLow");
         apparentTemperatureLowTime = APIUtils.tryToGetInt(jsonObject, "apparentTemperatureLowTime");
         uvIndexTime = APIUtils.tryToGetInt(jsonObject, "uvIndexTime");
+    }
+
+    @Override
+    public String toString() {
+        Field[] fields = getClass().getFields();
+        StringBuilder s = new StringBuilder("{ ");
+        for (Field field : fields) {
+            try {
+                s.append(field.getName());
+                s.append(" = ");
+                s.append(field.get(this));
+                s.append(" , ");
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        s.append("}");
+        return s.toString();
     }
 }
