@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefHeight="900.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane hbarPolicy="NEVER" prefHeight="900.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="300.0">
          <children>
@@ -200,23 +200,32 @@
                            <children>
                               <Label text="Wind">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font></Label>
-                              <Label fx:id="windSpeed" alignment="CENTER" text="Label">
-                                 <font>
-                                    <Font size="35.0" />
-                                 </font></Label>
+                              <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <ImageView fx:id="windBearing" fitHeight="57.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" translateX="-15.0">
+                                       <image>
+                                          <Image url="@images/windBearing.png" />
+                                       </image></ImageView>
+                                    <Label fx:id="windSpeed" alignment="CENTER" text="Label" translateX="-10.0">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                            <children>
                               <Label text="UV Index">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font></Label>
                               <Label fx:id="uvIndex" text="Label">
                                  <font>
-                                    <Font size="35.0" />
+                                    <Font size="24.0" />
                                  </font></Label>
                            </children>
                         </VBox>
@@ -224,11 +233,11 @@
                            <children>
                               <Label text="Pollen">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font></Label>
                               <Label fx:id="pollenCount" text="Label">
                                  <font>
-                                    <Font size="35.0" />
+                                    <Font size="24.0" />
                                  </font></Label>
                            </children>
                         </VBox>
@@ -236,11 +245,11 @@
                            <children>
                               <Label text="Air Quality">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font></Label>
                               <Label fx:id="airQuality" text="Label">
                                  <font>
-                                    <Font size="35.0" />
+                                    <Font size="24.0" />
                                  </font></Label>
                            </children>
                         </VBox>
