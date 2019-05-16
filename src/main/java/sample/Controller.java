@@ -2,9 +2,14 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
+import sample.api.DataQuery;
 import sample.api.WeatherData;
+import javafx.scene.control.TextField;
+
+import java.awt.*;
 
 public class Controller {
 
@@ -13,10 +18,16 @@ public class Controller {
     private boolean isFeelTemp = false;
 
     @FXML
-    Label NotifictionLabel;
+    Label NotificationLabel;
+
+    @FXML
+    TextField cityName;
 
     @FXML
     ToggleButton lowerToggle;
+
+    @FXML
+    Button refreshButton;
 
     @FXML
     Label mainTempLabel;
@@ -24,16 +35,20 @@ public class Controller {
     @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
-//        Window owner = bigTextArea.getScene().getWindow();
-//        Alert alert = new Alert(Alert.AlertType.ERROR);
-//        alert.setTitle("No more cookies :(");
-//        alert.setContentText("Unfortunately, we have ran out of cookies. Apologies.");
-//        alert.initOwner(owner);
-//        alert.show();
+    }
+
+    @FXML
+    protected void refreshHandler(Event event){
+        WeatherData newWeatherData = DataQuery.queryData(cityName.getText());
+        this.updateWeatherData(newWeatherData);
+
+
     }
 
     public void updateWeatherData(WeatherData weatherData) {
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
     }
+
+
 }
