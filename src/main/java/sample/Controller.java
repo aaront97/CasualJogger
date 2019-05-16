@@ -60,6 +60,18 @@ public class Controller {
     RadioButton dayAfterTomorrowButton;
 
     @FXML
+    Label windSpeed;
+
+    @FXML
+    Label uvIndex;
+
+    @FXML
+    Label airQuality;
+
+    @FXML
+    Label pollenCount;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
