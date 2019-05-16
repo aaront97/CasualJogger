@@ -198,7 +198,7 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="Wind">
+                              <Label fx:id="windLabel" text="Wind" translateX="6.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font></Label>
@@ -210,7 +210,7 @@
                                        </image></ImageView>
                                     <Label fx:id="windSpeed" alignment="CENTER" text="Label" translateX="-10.0">
                                        <font>
-                                          <Font size="24.0" />
+                                          <Font size="12.0" />
                                        </font>
                                     </Label>
                                  </children>
@@ -225,7 +225,7 @@
                                  </font></Label>
                               <Label fx:id="uvIndex" text="Label">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="12.0" />
                                  </font></Label>
                            </children>
                         </VBox>
@@ -237,7 +237,7 @@
                                  </font></Label>
                               <Label fx:id="pollenCount" text="Label">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="12.0" />
                                  </font></Label>
                            </children>
                         </VBox>
@@ -249,7 +249,7 @@
                                  </font></Label>
                               <Label fx:id="airQuality" text="Label">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font size="12.0" />
                                  </font></Label>
                            </children>
                         </VBox>

@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -28,6 +29,8 @@ public class Controller {
     private Image toggledImage = new Image(getClass().getClassLoader().getResource("images/toggled.png").toString());
     private Image notToggledImage = new Image(getClass().getClassLoader().getResource("images/notToggled.png").toString());
 
+    @FXML
+    Label windLabel;
 
     @FXML
     Label NotificationLabel;
@@ -145,14 +148,90 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
+        if(currentlyDisplayedDay == 0){
+            windBearing.setVisible(true);
+            windBearing.setTranslateX(-15);
+            windBearing.setRotate(weatherData.currentWindBearing);
 
-        windSpeed.setText(Math.round(weatherData.currentWindSpeed) + "mph");
-        windBearing.setRotate(windBearing.getRotate() + weatherData.currentWindBearing);
-        uvIndex.setText(weatherData.currentUV + "");
-        airQuality.setText(Math.round(weatherData.currentAQI) + "");
-        pollenCount.setText(weatherData.currentPollen);
+            windSpeed.setTranslateX(-10);
+            windSpeed.setStyle("-fx-font: 20 system;");
+            windSpeed.setText(Math.round(weatherData.currentWindSpeed) + "mph");
+
+            uvIndex.setStyle("-fx-font: 20 system;");
+            uvIndex.setText(weatherData.currentUV + "");
+
+            boolean apiCallLimitExceeded = weatherData.currentAQI == 0 ? true : false;
+
+            if(apiCallLimitExceeded){
+               airQuality.setStyle("-fx-font: 12 system;");
+               airQuality.setText("API Call Limit Exceeded");
+               pollenCount.setStyle("-fx-font: 12 system;");
+               pollenCount.setText("API Call Limit Exceeded");
+            }
+            else{
+                airQuality.setText(Math.round(weatherData.currentAQI) + "");
+
+                pollenCount.setText(weatherData.currentPollen);
+            }
+
+        }
+        else {
+            int index = currentlyDisplayedDay - 1;
+            windBearing.setVisible(false);
+            windBearing.setTranslateX(-1000);
+
+
+            windSpeed.setStyle("-fx-font: 12 system;");
+            windSpeed.setWrapText(true);
+
+//            String windMax = extractHourFromTimestamp((long)weatherData.maxWindSpeedForecast[index]);
+//            String windMin = (long)weatherData.minWindSpeedForecast[index]);
+            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + "mph at " + "" + " \n" +
+                              "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at " + "");
+
+
+            //TODO: MINUV_FORECAST AND MINUV_TIME
+            String uvMax = extractHourFromTimestamp((long)weatherData.maxUVTime[index]);
+            //String uvMin = String.valueOf(extractHourFromTimestamp((long)weatherData.minUVTime[index]));
+
+            uvIndex.setStyle("-fx-font: 12 system;");
+            uvIndex.setWrapText(true);
+            uvIndex.setText("Max: " + Math.round(weatherData.maxUVForecast[index]) +" at " + uvMax);
+
+            String aqiMax = weatherData.maxAQITime[index];
+            String aqiMin = weatherData.minAQITime[index];
+            String pollen = weatherData.pollen[index];
+
+            if(aqiMax == null){
+                airQuality.setStyle("-fx-font: 12 system;");
+                airQuality.setWrapText(true);
+                airQuality.setText("API Call Limit Exceeded");
+
+                pollenCount.setStyle("-fx-font: 12 system;");
+                pollenCount.setWrapText(true);
+                pollenCount.setText("API Call Limit Exceeded");
+            }
+            else{
+                airQuality.setStyle("-fx-font: 12 system;");
+                airQuality.setWrapText(true);
+                aqiMax = extractHourFromString(aqiMax);
+                aqiMin = extractHourFromString(aqiMin);
+                airQuality.setText("Max: " + Math.round(weatherData.maxAQIForecast[index]) + " at " + aqiMax +
+                                   "Min: " + Math.round(weatherData.minAQIForecast[index]) + " at " + aqiMin);
+
+                pollenCount.setStyle("-fx-font: 12 system;");
+                pollenCount.setWrapText(true);
+                pollenCount.setText(pollen);
+            }
+
+
+
+        }
+
 
     }
+
+
 
     @FXML
     protected void todayButtonClicked() {
@@ -197,4 +276,19 @@ public class Controller {
         isNightMode = !isNightMode;
         updateWeatherData(weatherData);
     }
+
+    public static String extractHourFromTimestamp(long timestamp){
+        Date date = new Date(timestamp*1000);
+        int hour = date.toInstant().atZone(ZoneId.systemDefault()).getHour();
+        String result = hour <= 12 ? String.valueOf(hour) + " am" : String.valueOf(hour-12) + " pm";
+        return result;
+    }
+
+    private String extractHourFromString(String date){
+        String time = date.split("T")[1];
+        int hour = Integer.parseInt(time.substring(0,2));
+        String result = hour + " h";
+        return result;
+    }
 }
+
