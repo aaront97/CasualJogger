@@ -7,6 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
@@ -18,11 +19,15 @@ import java.util.Locale;
 public class Controller {
 
     private WeatherData weatherData;
-    private boolean isDarkMode = false;
+    private boolean isNightMode = false;
     private boolean isFeelTemp = false;
 
     // 0 -> Today, 1 -> Tomorrow, 2 -> The day after tomorrow
-    private int currentlyDisplayedDay = 2;
+    private int currentlyDisplayedDay = 0;
+
+    private Image toggledImage = new Image(getClass().getClassLoader().getResource("images/toggled.png").toString());
+    private Image notToggledImage = new Image(getClass().getClassLoader().getResource("images/notToggled.png").toString());
+
 
     @FXML
     Label NotificationLabel;
@@ -73,6 +78,12 @@ public class Controller {
     Label pollenCount;
 
     @FXML
+    ImageView toggleRealFeel;
+
+    @FXML
+    ImageView toggleNightMode;
+
+    @FXML
     ImageView windBearing;
 
     @FXML
@@ -91,6 +102,18 @@ public class Controller {
     public void updateWeatherData(WeatherData weatherData) {
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
+
+        // Setting the toggles
+        if (isNightMode) {
+            toggleNightMode.setImage(toggledImage);
+        } else {
+            toggleNightMode.setImage(notToggledImage);
+        }
+        if (isFeelTemp) {
+            toggleRealFeel.setImage(toggledImage);
+        } else {
+            toggleRealFeel.setImage(notToggledImage);
+        }
 
         // Setting the label above the graph to today
         Calendar c = Calendar.getInstance();
@@ -162,5 +185,16 @@ public class Controller {
             updateWeatherData(weatherData);
         }
         dayAfterTomorrowButton.setSelected(true);
+    }
+
+    @FXML
+    protected void toggleRealFeel() {
+        isFeelTemp = !isFeelTemp;
+        updateWeatherData(weatherData);
+    }
+
+    @FXML void toggleNightMode() {
+        isNightMode = !isNightMode;
+        updateWeatherData(weatherData);
     }
 }
