@@ -170,26 +170,50 @@
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Label text="Wind" />
-                              <Label alignment="CENTER" text="Label" />
+                              <Label text="Wind">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font></Label>
+                              <Label fx:id="windSpeed" alignment="CENTER" text="Label">
+                                 <font>
+                                    <Font size="35.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
                            <children>
-                              <Label text="UV Index" />
-                              <Label text="Label" />
+                              <Label text="UV Index">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font></Label>
+                              <Label fx:id="uvIndex" text="Label">
+                                 <font>
+                                    <Font size="35.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <Label text="Pollen" />
-                              <Label text="Label" />
+                              <Label text="Pollen">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font></Label>
+                              <Label fx:id="pollenCount" text="Label">
+                                 <font>
+                                    <Font size="35.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="1">
                            <children>
-                              <Label text="Air Quality" />
-                              <Label text="Label" />
+                              <Label text="Air Quality">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font></Label>
+                              <Label fx:id="airQuality" text="Label">
+                                 <font>
+                                    <Font size="35.0" />
+                                 </font></Label>
                            </children>
                         </VBox>
                      </children>

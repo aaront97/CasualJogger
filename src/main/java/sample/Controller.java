@@ -33,6 +33,18 @@ public class Controller {
     Label mainTempLabel;
 
     @FXML
+    Label windSpeed;
+
+    @FXML
+    Label uvIndex;
+
+    @FXML
+    Label airQuality;
+
+    @FXML
+    Label pollenCount;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -48,6 +60,8 @@ public class Controller {
     public void updateWeatherData(WeatherData weatherData) {
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
+
+
     }
 
 
