@@ -3,7 +3,6 @@ package sample.api;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class WeatherData {
 
@@ -58,49 +57,49 @@ public class WeatherData {
 
         //BREEZOMETER COMMENTED DAILY LIMIT EXCEEDED
 
-        currentAQI = breezometerData.getCurrentAirQuality();
-        List<BreezometerRecord> records = breezometerData.getFutureAirQuality();
-        //assumes order of linked list
-        for(int i = 0; i < records.size(); i++){
-            if(records.get(i).key.equals("max")){
-                maxAQITime[i] = records.get(i).datetime;
-                maxAQIForecast[i] = records.get(i).value;
-            }
-            else{
-                minAQITime[i - minAQITime.length] = records.get(i).datetime;
-                minAQIForecast[i-minAQIForecast.length] = records.get(i).value;
-            }
-        }
-
-        //POLLEN
-        pollenLookupTable.put(1, "Very Low");
-        pollenLookupTable.put(2, "Low");
-        pollenLookupTable.put(3, "Moderate");
-        pollenLookupTable.put(4, "High");
-        pollenLookupTable.put(5, "Very High");
-
-        List<BreezometerRecord> pollenReadings = breezometerData.getPollenCount();
-        for(int i = 0; i < pollenReadings.size(); i++){
-            int value = pollenReadings.get(i).value;
-            String result;
-            if(value < 1){
-                result = "Negligible";
-            }
-            else{
-                result = pollenLookupTable.getOrDefault(value, "Very High");
-            }
-
-            if(i == 0 ){
-                currentPollen = result;
-            }
-            else{
-                pollen[i - 1] = result;
-            }
-
-        }
-        for (int i = 0; i < 60; i++) {
-            immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
-        }
+//        currentAQI = breezometerData.getCurrentAirQuality();
+//        List<BreezometerRecord> records = breezometerData.getFutureAirQuality();
+//        //assumes order of linked list
+//        for(int i = 0; i < records.size(); i++){
+//            if(records.get(i).key.equals("max")){
+//                maxAQITime[i] = records.get(i).datetime;
+//                maxAQIForecast[i] = records.get(i).value;
+//            }
+//            else{
+//                minAQITime[i - minAQITime.length] = records.get(i).datetime;
+//                minAQIForecast[i-minAQIForecast.length] = records.get(i).value;
+//            }
+//        }
+//
+//        //POLLEN
+//        pollenLookupTable.put(1, "Very Low");
+//        pollenLookupTable.put(2, "Low");
+//        pollenLookupTable.put(3, "Moderate");
+//        pollenLookupTable.put(4, "High");
+//        pollenLookupTable.put(5, "Very High");
+//
+//        List<BreezometerRecord> pollenReadings = breezometerData.getPollenCount();
+//        for(int i = 0; i < pollenReadings.size(); i++){
+//            int value = pollenReadings.get(i).value;
+//            String result;
+//            if(value < 1){
+//                result = "Negligible";
+//            }
+//            else{
+//                result = pollenLookupTable.getOrDefault(value, "Very High");
+//            }
+//
+//            if(i == 0 ){
+//                currentPollen = result;
+//            }
+//            else{
+//                pollen[i - 1] = result;
+//            }
+//
+//        }
+//        for (int i = 0; i < 60; i++) {
+//            immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
+//        }
 
         // END OF BREEZOMETER
 
