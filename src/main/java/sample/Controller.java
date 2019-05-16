@@ -2,15 +2,17 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.chart.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
+import javafx.scene.control.*;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
-import javafx.scene.control.TextField;
 
-import java.awt.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Controller {
 
@@ -19,7 +21,7 @@ public class Controller {
     private boolean isFeelTemp = false;
 
     // 0 -> Today, 1 -> Tomorrow, 2 -> The day after tomorrow
-    private int currentlyDisplayedDay = 1;
+    private int currentlyDisplayedDay = 2;
 
     @FXML
     Label NotificationLabel;
@@ -46,6 +48,18 @@ public class Controller {
     NumberAxis barChartYAxis;
 
     @FXML
+    Label chartDayLabel;
+
+    @FXML
+    RadioButton todayButton;
+
+    @FXML
+    RadioButton tomorrowButton;
+
+    @FXML
+    RadioButton dayAfterTomorrowButton;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -61,6 +75,14 @@ public class Controller {
     public void updateWeatherData(WeatherData weatherData) {
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
+
+        // Setting the label above the graph to today
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, 2);
+        String[] possibleTexts = {"Today", "Tomorrow", c.get(Calendar.DAY_OF_MONTH) + " " +
+                c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK)};
+        chartDayLabel.setText(possibleTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
         XYChart.Series<String, Double> lineSeries = new XYChart.Series<>();
@@ -83,5 +105,38 @@ public class Controller {
         barChartPrecip.getData().add(barSeries);
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
+    }
+
+    @FXML
+    protected void todayButtonClicked() {
+        if (currentlyDisplayedDay != 0) {
+            currentlyDisplayedDay = 0;
+            tomorrowButton.setSelected(false);
+            dayAfterTomorrowButton.setSelected(false);
+            updateWeatherData(weatherData);
+        }
+        todayButton.setSelected(true);
+    }
+
+    @FXML
+    protected void tomorrowButtonClicked() {
+        if (currentlyDisplayedDay != 1) {
+            currentlyDisplayedDay = 1;
+            todayButton.setSelected(false);
+            dayAfterTomorrowButton.setSelected(false);
+            updateWeatherData(weatherData);
+        }
+        tomorrowButton.setSelected(true);
+    }
+
+    @FXML
+    protected void dayAfterTomorrowButtonClicked() {
+        if (currentlyDisplayedDay != 2) {
+            currentlyDisplayedDay = 2;
+            todayButton.setSelected(false);
+            tomorrowButton.setSelected(false);
+            updateWeatherData(weatherData);
+        }
+        dayAfterTomorrowButton.setSelected(true);
     }
 }
