@@ -70,7 +70,7 @@
                             <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ToggleButton mnemonicParsing="false" text="ToggleButton" GridPane.rowIndex="1" />
+                              <ToggleButton mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="ToggleButton" GridPane.rowIndex="1" />
                               <Label text="real-feel">
                                  <font>
                                     <Font size="14.0" />
@@ -92,7 +92,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <ToggleButton mnemonicParsing="false" onAction="#ClickMeHandler" text="ToggleButton" GridPane.rowIndex="1" />
+                              <ToggleButton mnemonicParsing="false" onAction="#ClickMeHandler" prefHeight="31.0" prefWidth="90.0" text="ToggleButton" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
