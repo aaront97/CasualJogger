@@ -42,7 +42,7 @@
                       <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="180.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="20C" textAlignment="CENTER">
+                        <Label fx:id="mainTempLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="20C" textAlignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -92,7 +92,7 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <ToggleButton mnemonicParsing="false" onAction="#ClickMeHandler" prefHeight="31.0" prefWidth="90.0" text="ToggleButton" GridPane.rowIndex="1" />
+                              <ToggleButton fx:id="lowerToggle" mnemonicParsing="false" onAction="#ClickMeHandler" prefHeight="31.0" prefWidth="90.0" text="ToggleButton" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
                      </children>
