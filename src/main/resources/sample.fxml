@@ -9,6 +9,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -28,7 +30,15 @@
                      </font>
                   </TextField>
                   <Button cacheShape="false" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="20.0" text="Button" visible="false" />
-                  <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshHandler" onMouseClicked="#refreshHandler" prefHeight="40.0" prefWidth="45.0" text="Refresh" />
+                   <Button fx:id="refreshButton" contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#refreshHandler" onMouseClicked="#refreshHandler" prefHeight="40.0" prefWidth="45.0" text="Refresh">
+                       <graphic>
+                           <ImageView fitHeight="25.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                               <image>
+                                   <Image url="@images/refresh.png" />
+                               </image>
+                           </ImageView>
+                       </graphic>
+                   </Button>
                </children>
             </HBox>
             <HBox layoutX="-1.0" layoutY="59.0" prefHeight="226.0" prefWidth="300.0">
