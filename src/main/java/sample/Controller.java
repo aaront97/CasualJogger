@@ -7,6 +7,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
@@ -72,6 +73,9 @@ public class Controller {
     Label pollenCount;
 
     @FXML
+    ImageView windBearing;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -117,6 +121,14 @@ public class Controller {
         barChartPrecip.getData().add(barSeries);
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
+
+
+        windSpeed.setText(Math.round(weatherData.currentWindSpeed) + "mph");
+        windBearing.setRotate(windBearing.getRotate() + weatherData.currentWindBearing);
+        uvIndex.setText(weatherData.currentUV + "");
+        airQuality.setText(Math.round(weatherData.currentAQI) + "");
+        pollenCount.setText(weatherData.currentPollen);
+
     }
 
     @FXML
