@@ -3,7 +3,6 @@ package sample.api;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class WeatherData {
 
