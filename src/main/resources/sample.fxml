@@ -11,7 +11,6 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,8 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane hbarPolicy="NEVER" prefHeight="900.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane hbarPolicy="NEVER" prefHeight="900.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="300.0">
          <children>
@@ -85,12 +83,16 @@
                             <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ToggleButton mnemonicParsing="false" prefHeight="31.0" prefWidth="90.0" text="ToggleButton" GridPane.rowIndex="1" />
                               <Label text="real-feel">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
+                              <ImageView fx:id="toggleRealFeel" fitHeight="31.0" fitWidth="56.0" onMouseClicked="#toggleRealFeel" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@images/notToggled.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </GridPane>
                         <GridPane GridPane.rowIndex="2">
@@ -107,7 +109,11 @@
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <ToggleButton fx:id="lowerToggle" mnemonicParsing="false" onAction="#ClickMeHandler" prefHeight="31.0" prefWidth="90.0" text="ToggleButton" GridPane.rowIndex="1" />
+                              <ImageView fx:id="toggleNightMode" fitHeight="31.0" fitWidth="56.0" onMouseClicked="#toggleNightMode" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+                                 <image>
+                                    <Image url="@images/notToggled.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </GridPane>
                      </children>

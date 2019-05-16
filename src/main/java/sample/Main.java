@@ -17,6 +17,7 @@ public class Main extends Application {
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("sample.fxml"));
 
+        System.out.println(System.getProperty("user.dir"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(loader.load(), 310, 540));
 
