@@ -31,7 +31,9 @@ public class WeatherData {
 
     // 0 -> tomorrow, 1 -> day after tomorrow (no today!!!)
     public double[] maxWindSpeedForecast = new double[2];
+    public int[] maxWindSpeedTime = new int[2];
     public double[] minWindSpeedForecast = {10000, 10000};
+    public int[] minWindSpeedTime = new int[2];
     public int[] maxUVForecast = new int[2];
     public int[] maxUVTime = new int[2];
     public int[] maxAQIForecast = new int[2];
@@ -121,8 +123,14 @@ public class WeatherData {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 24; j++) {
                 HourlyWeatherSnapshot snapshot = darkSkyData.hourly.get(24 - prevRecord + 24*i + j);
-                maxWindSpeedForecast[i] = Math.max(maxWindSpeedForecast[i], snapshot.windSpeed);
-                minWindSpeedForecast[i] = Math.min(minWindSpeedForecast[i], snapshot.windSpeed);
+                if (snapshot.windSpeed > maxWindSpeedForecast[i]) {
+                    maxWindSpeedForecast[i] = snapshot.windSpeed;
+                    maxWindSpeedTime[i] = snapshot.time;
+                }
+                if (snapshot.windSpeed < minWindSpeedForecast[i]) {
+                    minWindSpeedForecast[i] = snapshot.windSpeed;
+                    minWindSpeedTime[i] = snapshot.time;
+                }
             }
         }
 

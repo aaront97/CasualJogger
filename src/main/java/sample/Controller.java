@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
-import java.time.ZoneId;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -163,9 +163,9 @@ public class Controller {
             boolean apiCallLimitExceeded = weatherData.currentAQI == 0 ? true : false;
 
             if(apiCallLimitExceeded){
-               airQuality.setStyle("-fx-font: 12 system;");
+               airQuality.setStyle("-fx-font: 11 system;");
                airQuality.setText("API Call Limit Exceeded");
-               pollenCount.setStyle("-fx-font: 12 system;");
+               pollenCount.setStyle("-fx-font: 11 system;");
                pollenCount.setText("API Call Limit Exceeded");
             }
             else{
@@ -181,45 +181,43 @@ public class Controller {
             windBearing.setTranslateX(-1000);
 
 
-            windSpeed.setStyle("-fx-font: 12 system;");
+            windSpeed.setStyle("-fx-font: 11 system;");
             windSpeed.setWrapText(true);
 
-//            String windMax = extractHourFromTimestamp((long)weatherData.maxWindSpeedForecast[index]);
-//            String windMin = (long)weatherData.minWindSpeedForecast[index]);
-            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + "mph at " + "" + " \n" +
-                              "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at " + "");
+            SimpleDateFormat format = new SimpleDateFormat("h a");     // (1-12) am/pm
+            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + "mph at "
+                                    + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + " \n" +
+                              "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at "
+                                    + format.format(new Date((long)weatherData.minWindSpeedTime[index] * 1000)));
 
 
-            //TODO: MINUV_FORECAST AND MINUV_TIME
-            String uvMax = extractHourFromTimestamp((long)weatherData.maxUVTime[index]);
-            //String uvMin = String.valueOf(extractHourFromTimestamp((long)weatherData.minUVTime[index]));
-
-            uvIndex.setStyle("-fx-font: 12 system;");
+            uvIndex.setStyle("-fx-font: 11 system;");
             uvIndex.setWrapText(true);
-            uvIndex.setText("Max: " + Math.round(weatherData.maxUVForecast[index]) +" at " + uvMax);
+            uvIndex.setText("Max: " + Math.round(weatherData.maxUVForecast[index]) +" at "
+                    + format.format(new Date((long)weatherData.maxUVTime[index] * 1000)));
 
             String aqiMax = weatherData.maxAQITime[index];
             String aqiMin = weatherData.minAQITime[index];
             String pollen = weatherData.pollen[index];
 
             if(aqiMax == null){
-                airQuality.setStyle("-fx-font: 12 system;");
+                airQuality.setStyle("-fx-font: 11 system;");
                 airQuality.setWrapText(true);
                 airQuality.setText("API Call Limit Exceeded");
 
-                pollenCount.setStyle("-fx-font: 12 system;");
+                pollenCount.setStyle("-fx-font: 11 system;");
                 pollenCount.setWrapText(true);
                 pollenCount.setText("API Call Limit Exceeded");
             }
             else{
-                airQuality.setStyle("-fx-font: 12 system;");
+                airQuality.setStyle("-fx-font: 11 system;");
                 airQuality.setWrapText(true);
                 aqiMax = extractHourFromString(aqiMax);
                 aqiMin = extractHourFromString(aqiMin);
                 airQuality.setText("Max: " + Math.round(weatherData.maxAQIForecast[index]) + " at " + aqiMax +
                                    "Min: " + Math.round(weatherData.minAQIForecast[index]) + " at " + aqiMin);
 
-                pollenCount.setStyle("-fx-font: 12 system;");
+                pollenCount.setStyle("-fx-font: 11 system;");
                 pollenCount.setWrapText(true);
                 pollenCount.setText(pollen);
             }
@@ -275,13 +273,6 @@ public class Controller {
     @FXML void toggleNightMode() {
         isNightMode = !isNightMode;
         updateWeatherData(weatherData);
-    }
-
-    public static String extractHourFromTimestamp(long timestamp){
-        Date date = new Date(timestamp*1000);
-        int hour = date.toInstant().atZone(ZoneId.systemDefault()).getHour();
-        String result = hour <= 12 ? String.valueOf(hour) + " am" : String.valueOf(hour-12) + " pm";
-        return result;
     }
 
     private String extractHourFromString(String date){
