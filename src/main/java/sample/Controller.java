@@ -161,46 +161,13 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
-        //Populate dawn dusk timings
-
-
+        //Dawn Dusk variables
         double dawnTime = 0.0;
         double duskTime = 1.0;
-        double nowTime = 0.5;
-        double ddNowLineLength = 50.0;
+        double nowTime = 0.2;
+        double ddNowLineLength = 80.0;
         double ddNowLineInset = 0.0;
         double ddProportion;
-
-        if (nowTime > 0) { //ie. in daytime
-            dawnDuskLeft.setText("dawn" + dawnTime);
-            dawnDuskRight.setText("dusk" + duskTime);
-
-
-            ddProportion = (nowTime - dawnTime) / (duskTime - dawnTime);
-
-            ddProportion = 1.0;
-
-            dawnDuskRight.setText(Double.toString(ddProportion));
-
-
-            dawnDuskNowLine.setEndX(ddNowLineLength * Math.sin(ddProportion * Math.PI * 2));
-            dawnDuskNowLine.setEndY(ddNowLineLength * Math.cos(ddProportion * Math.PI * 2));
-
-
-
-
-
-        } else {
-            dawnDuskLeft.setText("dusk" + duskTime);
-            dawnDuskRight.setText("dawn" + dawnTime);
-        }
-
-
-
-
-
-
-
 
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);
@@ -227,6 +194,22 @@ public class Controller {
 
                 pollenCount.setText(weatherData.currentPollen);
             }
+
+            //Dawn Dusk Logic for today
+            dawnDuskNowLine.setOpacity(1.0);
+
+            if (nowTime > 0) { //ie. in daytime
+                dawnDuskLeft.setText("dawn@" + dawnTime);
+                dawnDuskRight.setText("dusk@" + duskTime);
+                ddProportion = (nowTime - dawnTime) / (duskTime - dawnTime);
+            } else {
+                dawnDuskLeft.setText("dusk@" + duskTime);
+                dawnDuskRight.setText("dawn@" + dawnTime);
+                ddProportion = (nowTime - duskTime) / (dawnTime - duskTime);
+            }
+            dawnDuskNowLine.setEndX(ddNowLineLength * Math.sin((ddProportion - 0.5)*Math.PI));
+            dawnDuskNowLine.setEndY(ddNowLineLength * -Math.cos((ddProportion - 0.5)*Math.PI));
+
 
         } else {
             int index = currentlyDisplayedDay - 1;
@@ -274,6 +257,14 @@ public class Controller {
                 pollenCount.setWrapText(true);
                 pollenCount.setText(pollen);
             }
+
+            //Dawn Dusk Logic for other days
+
+            dawnDuskLeft.setText("dawn@" + dawnTime);
+            dawnDuskRight.setText("dusk@" + duskTime);
+
+            dawnDuskNowLine.setOpacity(0.0);
+
 
 
 
