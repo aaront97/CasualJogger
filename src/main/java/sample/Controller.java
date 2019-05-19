@@ -2,8 +2,6 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -13,7 +11,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import sample.api.APIReadException;
 import sample.api.DataQuery;
+import sample.api.LocationNotFoundException;
 import sample.api.WeatherData;
 
 import java.text.SimpleDateFormat;
@@ -109,15 +109,37 @@ public class Controller {
 
     @FXML
     protected void refreshHandler(Event event){
-        WeatherData newWeatherData = DataQuery.queryData(cityName.getText());
-        this.updateWeatherData(newWeatherData);
-
-
+        WeatherData newWeatherData;
+        try{
+           weatherData = DataQuery.queryData(cityName.getText());
+        }
+        catch(LocationNotFoundException e){
+            Alert locationAlert = new Alert(Alert.AlertType.ERROR);
+            locationAlert.setTitle("Location Not Found");
+            locationAlert.setContentText("Sorry, we can't find weather data for " +
+                    e.getMessage() + ". Please enter a valid location");
+            locationAlert.setHeaderText(null);
+            locationAlert.showAndWait();
+            return;
+        }
+        catch(APIReadException e){
+            Alert apiAlert = new Alert(Alert.AlertType.ERROR);
+            apiAlert.setTitle("API Error");
+            apiAlert.setContentText("Sorry, we encountered an error while getting our data. Please read the README file " +
+                            "and enter a valid API key for each API provider" );
+            apiAlert.setHeaderText(null);
+            apiAlert.showAndWait();
+            return;
+        }
+        updateWeatherData(weatherData);
     }
 
     public void updateWeatherData(WeatherData weatherData) {
+        NotificationLabel.setText(weatherData.location);
+
         this.weatherData = weatherData;
-        mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
+        mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
+                                                    : weatherData.currentTemperature) + " " + "\u00B0C");
 
         // Setting the toggles
         if (isNightMode) {
@@ -140,10 +162,11 @@ public class Controller {
         chartDayLabel.setText(possibleTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
+        double[][] temperatureSource = isFeelTemp ? weatherData.apparentTemperatureForecast : weatherData.temperatureForecast;
         XYChart.Series<String, Double> lineSeries = new XYChart.Series<>();
         for (int i = 0; i < 24; i++) {
             String label = i+":00";
-            lineSeries.getData().add(new XYChart.Data<>(label, weatherData.temperatureForecast[currentlyDisplayedDay][i]));
+            lineSeries.getData().add(new XYChart.Data<>(label, temperatureSource[currentlyDisplayedDay][i]));
         }
         lineChartTemp.getData().clear();
         lineChartTemp.getData().add(lineSeries);
@@ -161,14 +184,14 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
-        //Dawn Dusk variables and init
+
+        //Dawn Dusk variables
         double dawnTime = 0.0;
         double duskTime = 1.0;
         double nowTime = 0.0;
         double ddNowLineLength = 80.0;
         double ddNowLineInset = 10.0;
         double ddProportion;
-
 
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);
@@ -261,6 +284,7 @@ public class Controller {
                 pollenCount.setText(pollen);
             }
 
+
             //Dawn Dusk Logic for other days
 
             dawnDuskLeft.setText("Sunrise");
@@ -271,9 +295,8 @@ public class Controller {
 
 
 
+
         }
-
-
     }
 
 

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class DataQuery {
 
-    public static WeatherData queryData(String cityName) {
+    public static WeatherData queryData(String cityName) throws LocationNotFoundException, APIReadException {
 
         String breezometerKey = "";
         String darkSkyKey = "";
@@ -22,19 +22,30 @@ public class DataQuery {
             darkSkyKey = apiKeys.getString("darkSky");
             googleKey = apiKeys.getString("google");
         } catch (Exception e) {
-            System.out.println("An error while reading API keys from JSON");
-            e.printStackTrace();
-            return null;
+            throw new APIReadException();
+//            System.out.println("An error while reading API keys from JSON");
+//            e.printStackTrace();
+//            return null;
         }
 
         GoogleAPI googleAPI = new GoogleAPI(googleKey);
-        LatLonInfo latLonInfo = googleAPI.getCoord(cityName);
+        LatLonInfo latLonInfo;
+        try{
+            latLonInfo = googleAPI.getCoord(cityName);
+        }
+        catch(LocationNotFoundException e){
+            throw new LocationNotFoundException(e.getMessage());
+        }
+
 
         DarkSkyData darkSkyData = DarkSkyAPI.getDarkSkyData(darkSkyKey, latLonInfo);
         BreezometerAPI breezometerAPI = new BreezometerAPI(breezometerKey,
                 Double.toString(latLonInfo.lat), Double.toString(latLonInfo.lon));
 
-        return new WeatherData(darkSkyData, breezometerAPI);
+        WeatherData weatherData = new WeatherData(darkSkyData, breezometerAPI);
+        weatherData.location = latLonInfo.address;
+
+        return weatherData;
     }
 
 }

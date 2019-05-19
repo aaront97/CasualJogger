@@ -23,7 +23,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefHeight="870.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane hbarPolicy="NEVER" prefHeight="870.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="300.0">
          <children>
@@ -124,11 +124,7 @@
             </HBox>
             <HBox layoutX="5.0" layoutY="270.0" prefHeight="68.0" prefWidth="289.0">
                <children>
-                  <Label fx:id="NotificationLabel" text="Notifications">
-                     <font>
-                        <Font size="44.0" />
-                     </font>
-                  </Label>
+                  <Label fx:id="NotificationLabel" text="Notifications" wrapText="true" />
                </children></HBox>
             <HBox layoutX="2.0" layoutY="338.0" prefHeight="201.0" prefWidth="296.0">
                <children>
