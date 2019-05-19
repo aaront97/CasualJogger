@@ -2,6 +2,7 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -9,14 +10,16 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
 import sample.api.APIReadException;
 import sample.api.DataQuery;
 import sample.api.LocationNotFoundException;
 import sample.api.WeatherData;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -103,6 +106,15 @@ public class Controller {
     ImageView windBearing;
 
     @FXML
+    Label summaryLabel;
+
+    @FXML
+    Line nowLine;
+
+    @FXML
+    Label nowLabel;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -153,13 +165,16 @@ public class Controller {
             toggleRealFeel.setImage(notToggledImage);
         }
 
-        // Setting the label above the graph to today
+        // Setting the label above the graph and the summary to displayed day
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, 2);
-        String[] possibleTexts = {"Today", "Tomorrow", c.get(Calendar.DAY_OF_MONTH) + " " +
-                c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK)};
-        chartDayLabel.setText(possibleTexts[currentlyDisplayedDay]);
+        String dayAfterTomorrow = c.get(Calendar.DAY_OF_MONTH) + " " +
+                c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK);
+        String[] possibleGraphTexts = {"Today", "Tomorrow", dayAfterTomorrow};
+        String[] possibleSummaryTexts = {"Now", "Tomorrow", dayAfterTomorrow};
+        chartDayLabel.setText(possibleGraphTexts[currentlyDisplayedDay]);
+        summaryLabel.setText(possibleSummaryTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
         double[][] temperatureSource = isFeelTemp ? weatherData.apparentTemperatureForecast : weatherData.temperatureForecast;
@@ -184,6 +199,27 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
+        // Draw now line for graphs
+        if (currentlyDisplayedDay > 0) {
+            nowLine.setVisible(false);
+            nowLabel.setVisible(false);
+        } else {
+            nowLine.setVisible(true);
+            nowLabel.setVisible(true);
+
+            // Calculate margin by from time
+            LocalDateTime localTime = LocalDateTime.now();
+            float past = localTime.getHour() * 60 + localTime.getMinute();
+            float proportion = past / (24*60);
+            int margin = Math.round(50 + 232 * proportion);
+
+            // Apply margin and set text
+            GridPane.setMargin(nowLine, new Insets(10, 0, 0, margin));
+            GridPane.setMargin(nowLabel, new Insets(-4, 0, 0, margin -25));
+            DecimalFormat decimalFormat = new DecimalFormat("00");
+            nowLabel.setText("Now - " + decimalFormat.format(localTime.getHour()) + ":" + decimalFormat.format(localTime.getMinute()));
+
+        }
 
         //Dawn Dusk variables
         double dawnTime = 0.0;

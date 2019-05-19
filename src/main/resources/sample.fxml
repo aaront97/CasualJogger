@@ -165,6 +165,18 @@
                               <RadioButton fx:id="dayAfterTomorrowButton" maxHeight="17.0" maxWidth="17.0" mnemonicParsing="false" onMouseClicked="#dayAfterTomorrowButtonClicked" prefHeight="17.0" prefWidth="0.0" />
                            </children>
                         </HBox>
+                        <Line fx:id="nowLine" endY="90.0" stroke="RED" strokeWidth="1.5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
+                           <GridPane.margin>
+                              <Insets left="166.0" top="10.0" />
+                           </GridPane.margin></Line>
+                        <Label fx:id="nowLabel" text="Now - 16:43" textFill="RED" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+                           <font>
+                              <Font size="9.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="141.0" top="-4.0" />
+                           </GridPane.margin>
+                        </Label>
                      </children>
                   </GridPane>
                </children>
@@ -179,7 +191,7 @@
                 <RowConstraints maxHeight="131.0" minHeight="9.0" prefHeight="131.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="Now">
+                  <Label fx:id="summaryLabel" text="Now">
                      <font>
                         <Font size="14.0" />
                      </font>
