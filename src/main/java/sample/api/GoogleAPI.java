@@ -56,12 +56,17 @@ public class GoogleAPI {
                 throw new LocationNotFoundException(city);
             }
 
+
             JSONObject properties = response.getJSONArray("results").getJSONObject(0);
             String latitude = String.valueOf(
                     properties.getJSONObject("geometry").getJSONObject("location").getDouble("lat"));
             String longitude = String.valueOf(
                     properties.getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
             String formatted_address = properties.getString("formatted_address");
+
+            if(!formatted_address.contains(city)){
+                throw new LocationNotFoundException(city);
+            }
 
             LatLonInfo result = new LatLonInfo();
             result.lat = Double.parseDouble(latitude);

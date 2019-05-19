@@ -114,7 +114,6 @@ public class Controller {
            weatherData = DataQuery.queryData(cityName.getText());
         }
         catch(LocationNotFoundException e){
-            System.out.println("Hello");
             Alert locationAlert = new Alert(Alert.AlertType.ERROR);
             locationAlert.setTitle("Location Not Found");
             locationAlert.setContentText("Sorry, we can't find weather data for " +
