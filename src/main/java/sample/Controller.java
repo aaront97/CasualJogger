@@ -161,13 +161,14 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
-        //Dawn Dusk variables
+        //Dawn Dusk variables and init
         double dawnTime = 0.0;
         double duskTime = 1.0;
-        double nowTime = 0.2;
+        double nowTime = 0.0;
         double ddNowLineLength = 80.0;
-        double ddNowLineInset = 0.0;
+        double ddNowLineInset = 10.0;
         double ddProportion;
+
 
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);
@@ -199,16 +200,18 @@ public class Controller {
             dawnDuskNowLine.setOpacity(1.0);
 
             if (nowTime > 0) { //ie. in daytime
-                dawnDuskLeft.setText("dawn@" + dawnTime);
-                dawnDuskRight.setText("dusk@" + duskTime);
+                dawnDuskLeft.setText("Sunrise");
+                dawnDuskRight.setText("Sunset");
                 ddProportion = (nowTime - dawnTime) / (duskTime - dawnTime);
             } else {
-                dawnDuskLeft.setText("dusk@" + duskTime);
-                dawnDuskRight.setText("dawn@" + dawnTime);
+                dawnDuskLeft.setText("Sunset");
+                dawnDuskRight.setText("Sunrise");
                 ddProportion = (nowTime - duskTime) / (dawnTime - duskTime);
             }
             dawnDuskNowLine.setEndX(ddNowLineLength * Math.sin((ddProportion - 0.5)*Math.PI));
+            dawnDuskNowLine.setStartX(ddNowLineInset * Math.sin((ddProportion - 0.5)*Math.PI));
             dawnDuskNowLine.setEndY(ddNowLineLength * -Math.cos((ddProportion - 0.5)*Math.PI));
+            dawnDuskNowLine.setStartY(ddNowLineInset * -Math.cos((ddProportion - 0.5)*Math.PI));
 
 
         } else {
@@ -260,8 +263,8 @@ public class Controller {
 
             //Dawn Dusk Logic for other days
 
-            dawnDuskLeft.setText("dawn@" + dawnTime);
-            dawnDuskRight.setText("dusk@" + duskTime);
+            dawnDuskLeft.setText("Sunrise");
+            dawnDuskRight.setText("Sunset");
 
             dawnDuskNowLine.setOpacity(0.0);
 
