@@ -2,8 +2,6 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -12,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
-import javafx.stage.Stage;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
@@ -117,7 +114,8 @@ public class Controller {
 
     public void updateWeatherData(WeatherData weatherData) {
         this.weatherData = weatherData;
-        mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
+        mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
+                                                    : weatherData.currentTemperature) + " " + "\u00B0C");
 
         // Setting the toggles
         if (isNightMode) {
@@ -140,10 +138,11 @@ public class Controller {
         chartDayLabel.setText(possibleTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
+        double[][] temperatureSource = isFeelTemp ? weatherData.apparentTemperatureForecast : weatherData.temperatureForecast;
         XYChart.Series<String, Double> lineSeries = new XYChart.Series<>();
         for (int i = 0; i < 24; i++) {
             String label = i+":00";
-            lineSeries.getData().add(new XYChart.Data<>(label, weatherData.temperatureForecast[currentlyDisplayedDay][i]));
+            lineSeries.getData().add(new XYChart.Data<>(label, temperatureSource[currentlyDisplayedDay][i]));
         }
         lineChartTemp.getData().clear();
         lineChartTemp.getData().add(lineSeries);
