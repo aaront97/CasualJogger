@@ -2,8 +2,6 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -141,7 +139,8 @@ public class Controller {
         NotificationLabel.setText(weatherData.location);
 
         this.weatherData = weatherData;
-        mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
+        mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
+                                                    : weatherData.currentTemperature) + " " + "\u00B0C");
 
         // Setting the toggles
         if (isNightMode) {
@@ -164,10 +163,11 @@ public class Controller {
         chartDayLabel.setText(possibleTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
+        double[][] temperatureSource = isFeelTemp ? weatherData.apparentTemperatureForecast : weatherData.temperatureForecast;
         XYChart.Series<String, Double> lineSeries = new XYChart.Series<>();
         for (int i = 0; i < 24; i++) {
             String label = i+":00";
-            lineSeries.getData().add(new XYChart.Data<>(label, weatherData.temperatureForecast[currentlyDisplayedDay][i]));
+            lineSeries.getData().add(new XYChart.Data<>(label, temperatureSource[currentlyDisplayedDay][i]));
         }
         lineChartTemp.getData().clear();
         lineChartTemp.getData().add(lineSeries);
@@ -185,13 +185,17 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
+
         //Populate dawn dusk timings
+
+        //Dawn Dusk variables
         double dawnTime = 0.0;
         double duskTime = 1.0;
-        double nowTime = 0.5;
-        double ddNowLineLength = 50.0;
+        double nowTime = 0.2;
+        double ddNowLineLength = 80.0;
         double ddNowLineInset = 0.0;
         double ddProportion;
+
 
         if (nowTime > 0) { //ie. in daytime
             dawnDuskLeft.setText("dawn" + dawnTime);
@@ -216,6 +220,7 @@ public class Controller {
             dawnDuskLeft.setText("dusk" + duskTime);
             dawnDuskRight.setText("dawn" + dawnTime);
         }
+
 
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);
@@ -242,6 +247,22 @@ public class Controller {
 
                 pollenCount.setText(weatherData.currentPollen);
             }
+
+            //Dawn Dusk Logic for today
+            dawnDuskNowLine.setOpacity(1.0);
+
+            if (nowTime > 0) { //ie. in daytime
+                dawnDuskLeft.setText("dawn@" + dawnTime);
+                dawnDuskRight.setText("dusk@" + duskTime);
+                ddProportion = (nowTime - dawnTime) / (duskTime - dawnTime);
+            } else {
+                dawnDuskLeft.setText("dusk@" + duskTime);
+                dawnDuskRight.setText("dawn@" + dawnTime);
+                ddProportion = (nowTime - duskTime) / (dawnTime - duskTime);
+            }
+            dawnDuskNowLine.setEndX(ddNowLineLength * Math.sin((ddProportion - 0.5)*Math.PI));
+            dawnDuskNowLine.setEndY(ddNowLineLength * -Math.cos((ddProportion - 0.5)*Math.PI));
+
 
         } else {
             int index = currentlyDisplayedDay - 1;
@@ -289,6 +310,19 @@ public class Controller {
                 pollenCount.setWrapText(true);
                 pollenCount.setText(pollen);
             }
+
+
+            //Dawn Dusk Logic for other days
+
+            dawnDuskLeft.setText("dawn@" + dawnTime);
+            dawnDuskRight.setText("dusk@" + duskTime);
+
+            dawnDuskNowLine.setOpacity(0.0);
+
+
+
+
+
         }
     }
 

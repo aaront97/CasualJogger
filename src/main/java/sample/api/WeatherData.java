@@ -3,7 +3,6 @@ package sample.api;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class WeatherData {
 
@@ -21,6 +20,7 @@ public class WeatherData {
 
     // 0 -> today, 1-> tomorrow, 2-> day after tomorrow
     public double[][] temperatureForecast = new double[3][24];
+    public double[][] apparentTemperatureForecast = new double[3][24];
     public double[][] precipitationForecast = new double[3][24];
 
     public double currentWindSpeed;
@@ -110,6 +110,7 @@ public class WeatherData {
         int[] cur = {0};    // Stupid lambda-expressions and final variables...
         darkSkyData.previous.forEach((HourlyWeatherSnapshot snapshot) -> {
             temperatureForecast[0][cur[0]] = snapshot.temperature;
+            apparentTemperatureForecast[0][cur[0]] = snapshot.apparentTemperature;
             precipitationForecast[0][cur[0]] = snapshot.precipProbability;
             cur[0]++;
         });
@@ -117,6 +118,7 @@ public class WeatherData {
         darkSkyData.hourly.forEach((HourlyWeatherSnapshot snapshot) -> {
             if (cur[0] < 3*24) {
                 temperatureForecast[cur[0] / 24][cur[0] % 24] = snapshot.temperature;
+                apparentTemperatureForecast[cur[0] / 24][cur[0] % 24] = snapshot.apparentTemperature;
                 precipitationForecast[cur[0] / 24][cur[0] % 24] = snapshot.precipProbability;
             }
             cur[0]++;
