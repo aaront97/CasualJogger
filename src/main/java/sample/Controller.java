@@ -100,6 +100,9 @@ public class Controller {
     ImageView windBearing;
 
     @FXML
+    Label summaryLabel;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -129,13 +132,16 @@ public class Controller {
             toggleRealFeel.setImage(notToggledImage);
         }
 
-        // Setting the label above the graph to today
+        // Setting the label above the graph and the summary to displayed day
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, 2);
-        String[] possibleTexts = {"Today", "Tomorrow", c.get(Calendar.DAY_OF_MONTH) + " " +
-                c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK)};
-        chartDayLabel.setText(possibleTexts[currentlyDisplayedDay]);
+        String dayAfterTomorrow = c.get(Calendar.DAY_OF_MONTH) + " " +
+                c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK);
+        String[] possibleGraphTexts = {"Today", "Tomorrow", dayAfterTomorrow};
+        String[] possibleSummaryTexts = {"Now", "Tomorrow", dayAfterTomorrow};
+        chartDayLabel.setText(possibleGraphTexts[currentlyDisplayedDay]);
+        summaryLabel.setText(possibleSummaryTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
         double[][] temperatureSource = isFeelTemp ? weatherData.apparentTemperatureForecast : weatherData.temperatureForecast;
