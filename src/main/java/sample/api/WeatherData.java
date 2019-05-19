@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class WeatherData {
 
     private static final HashMap<Integer, String> pollenLookupTable = new HashMap<>();
+    public String location;
 
     public int timestamp;
 
