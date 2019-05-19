@@ -35,6 +35,9 @@ public class Controller {
 
     private Image toggledImage = new Image(getClass().getClassLoader().getResource("images/toggled.png").toString());
     private Image notToggledImage = new Image(getClass().getClassLoader().getResource("images/notToggled.png").toString());
+    private Image ddSun = new Image(getClass().getClassLoader().getResource("images/ddSun.png").toString());
+    private Image ddMoon = new Image(getClass().getClassLoader().getResource("images/ddMoon.png").toString());
+
 
     @FXML
     Label windLabel;
@@ -95,6 +98,9 @@ public class Controller {
 
     @FXML
     Line dawnDuskNowLine;
+
+    @FXML
+    ImageView dawnDuskCentreGraphic;
 
     @FXML
     ImageView toggleRealFeel;
@@ -228,6 +234,7 @@ public class Controller {
         double ddNowLineLength = 80.0;
         double ddNowLineInset = 10.0;
         double ddProportion;
+        dawnDuskCentreGraphic.setImage(ddSun);
 
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);

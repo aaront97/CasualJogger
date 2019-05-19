@@ -20,11 +20,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefHeight="870.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane hbarPolicy="NEVER" prefHeight="870.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <content>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="300.0">
             <children>
@@ -279,8 +278,7 @@
                                         <Font size="18.0" />
                                     </font>
                                 </Label>
-                                <ImageView fx:id="duskDawnGraphic" fitHeight="51.0" fitWidth="53.0" layoutX="124.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
-                                <Circle centerX="150.0" centerY="80.0" fill="DODGERBLUE" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
+                                <ImageView fx:id="dawnDuskCentreGraphic" fitHeight="51.0" fitWidth="53.0" layoutX="124.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
                             </children>
                         </Pane>
                     </children>
