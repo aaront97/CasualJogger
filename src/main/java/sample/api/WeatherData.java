@@ -3,6 +3,7 @@ package sample.api;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class WeatherData {
 
@@ -26,7 +27,6 @@ public class WeatherData {
     public int currentUV;
     public double currentAQI;
     public String currentPollen;
-    // TODO Pollen
 
 
     // 0 -> tomorrow, 1 -> day after tomorrow (no today!!!)
@@ -99,11 +99,12 @@ public class WeatherData {
 //            }
 //
 //        }
-//        for (int i = 0; i < 60; i++) {
-//            immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
-//        }
+        //END OF BREEZOMETER
+        for (int i = 0; i < 60; i++) {
+            immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
+        }
 
-        // END OF BREEZOMETER
+
 
         int[] cur = {0};    // Stupid lambda-expressions and final variables...
         darkSkyData.previous.forEach((HourlyWeatherSnapshot snapshot) -> {
