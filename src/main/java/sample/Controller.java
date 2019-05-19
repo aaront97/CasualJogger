@@ -2,6 +2,8 @@ package sample;
 
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -9,6 +11,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
@@ -81,6 +85,9 @@ public class Controller {
     Label pollenCount;
 
     @FXML
+    Label dawnDuskTimings;
+
+    @FXML
     ImageView toggleRealFeel;
 
     @FXML
@@ -148,6 +155,27 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
+        //Populate dawn dusk timings
+        dawnDuskTimings.setText("BIGTEXT");
+        Line testline = new Line(0.0, 0.0, 50.0, 50.0);
+
+        Group ddRadial = new Group(testline);
+
+        Scene ddScene = new Scene(ddRadial);
+
+        Stage ddStage = new Stage();
+
+        ddStage.setScene(ddScene);
+
+        ddStage.show();
+
+
+
+
+
+
+
+
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);
             windBearing.setTranslateX(-15);
@@ -174,8 +202,7 @@ public class Controller {
                 pollenCount.setText(weatherData.currentPollen);
             }
 
-        }
-        else {
+        } else {
             int index = currentlyDisplayedDay - 1;
             windBearing.setVisible(false);
             windBearing.setTranslateX(-1000);
@@ -270,7 +297,8 @@ public class Controller {
         updateWeatherData(weatherData);
     }
 
-    @FXML void toggleNightMode() {
+    @FXML
+    void toggleNightMode() {
         isNightMode = !isNightMode;
         updateWeatherData(weatherData);
     }

@@ -21,9 +21,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefHeight="900.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane hbarPolicy="NEVER" prefHeight="870.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <content>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="300.0">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="870.0" prefWidth="300.0">
          <children>
             <HBox alignment="CENTER" layoutY="8.0" mouseTransparent="false" prefHeight="51.0" prefWidth="300.0">
                <children>
@@ -122,7 +122,7 @@
             </HBox>
             <HBox layoutX="5.0" layoutY="270.0" prefHeight="68.0" prefWidth="289.0">
                <children>
-                  <Label fx:id="NotifictaionLabel" text="Notifications">
+                  <Label fx:id="NotificationLabel" text="Notifications">
                      <font>
                         <Font size="44.0" />
                      </font>
@@ -171,7 +171,7 @@
                   </GridPane>
                </children>
             </HBox>
-            <GridPane layoutX="-1.0" layoutY="539.0" prefHeight="350.0" prefWidth="302.0">
+            <GridPane layoutX="-1.0" layoutY="539.0" prefHeight="320.0" prefWidth="302.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -255,7 +255,7 @@
                         </VBox>
                      </children>
                   </GridPane>
-                  <Label text="Sunrise, sunset" GridPane.rowIndex="2">
+                  <Label fx:id="dawnDuskTimings" prefHeight="86.0" prefWidth="274.0" text="sunsetsunrise" GridPane.rowIndex="2">
                      <font>
                         <Font size="39.0" />
                      </font>
