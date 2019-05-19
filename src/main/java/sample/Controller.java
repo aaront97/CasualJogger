@@ -13,7 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
+import sample.api.APIReadException;
 import sample.api.DataQuery;
+import sample.api.LocationNotFoundException;
 import sample.api.WeatherData;
 
 import java.text.SimpleDateFormat;
@@ -109,13 +111,35 @@ public class Controller {
 
     @FXML
     protected void refreshHandler(Event event){
-        WeatherData newWeatherData = DataQuery.queryData(cityName.getText());
-        this.updateWeatherData(newWeatherData);
-
-
+        WeatherData newWeatherData;
+        try{
+           weatherData = DataQuery.queryData(cityName.getText());
+        }
+        catch(LocationNotFoundException e){
+            System.out.println("Hello");
+            Alert locationAlert = new Alert(Alert.AlertType.ERROR);
+            locationAlert.setTitle("Location Not Found");
+            locationAlert.setContentText("Sorry, we can't find weather data for " +
+                    e.getMessage() + ". Please enter a valid location");
+            locationAlert.setHeaderText(null);
+            locationAlert.showAndWait();
+            return;
+        }
+        catch(APIReadException e){
+            Alert apiAlert = new Alert(Alert.AlertType.ERROR);
+            apiAlert.setTitle("API Error");
+            apiAlert.setContentText("Sorry, we encountered an error while getting our data. Please read the README file " +
+                            "and enter a valid API key for each API provider" );
+            apiAlert.setHeaderText(null);
+            apiAlert.showAndWait();
+            return;
+        }
+        updateWeatherData(weatherData);
     }
 
     public void updateWeatherData(WeatherData weatherData) {
+        NotificationLabel.setText(weatherData.location);
+
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(weatherData.currentTemperature) + " " + "\u00B0C");
 
@@ -162,8 +186,6 @@ public class Controller {
         barChartPrecip.setCategoryGap(0);
 
         //Populate dawn dusk timings
-
-
         double dawnTime = 0.0;
         double duskTime = 1.0;
         double nowTime = 0.5;
@@ -194,13 +216,6 @@ public class Controller {
             dawnDuskLeft.setText("dusk" + duskTime);
             dawnDuskRight.setText("dawn" + dawnTime);
         }
-
-
-
-
-
-
-
 
         if(currentlyDisplayedDay == 0){
             windBearing.setVisible(true);
@@ -274,12 +289,7 @@ public class Controller {
                 pollenCount.setWrapText(true);
                 pollenCount.setText(pollen);
             }
-
-
-
         }
-
-
     }
 
 

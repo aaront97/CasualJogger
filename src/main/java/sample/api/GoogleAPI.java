@@ -20,7 +20,7 @@ public class GoogleAPI {
         this.apiKey = apiKey;
     }
 
-    public LatLonInfo getCoord(String city) {
+    public LatLonInfo getCoord(String city) throws LocationNotFoundException {
         if (apiKey == null) {
             try {
                 String apiKeysString = new String(
@@ -49,6 +49,13 @@ public class GoogleAPI {
             response = new JSONObject(json_response.toString());
             con.disconnect();
 
+
+            String status = response.getString("status");
+            System.out.println(status);
+            if(status.equals("ZERO_RESULTS")){
+                throw new LocationNotFoundException(city);
+            }
+
             JSONObject properties = response.getJSONArray("results").getJSONObject(0);
             String latitude = String.valueOf(
                     properties.getJSONObject("geometry").getJSONObject("location").getDouble("lat"));
@@ -62,7 +69,10 @@ public class GoogleAPI {
             result.address = formatted_address;
             return result;
         }
-        catch(Exception e) {
+        catch(LocationNotFoundException e) {
+            throw new LocationNotFoundException(e.getMessage());
+        }
+        catch(Exception e){
             e.printStackTrace();
             return null;
         }
