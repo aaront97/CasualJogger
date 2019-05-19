@@ -20,6 +20,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -259,18 +260,19 @@
                   </GridPane>
                   <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
-                        <Line endX="-100.0" layoutX="150.0" layoutY="100.0" />
-                        <Label fx:id="duskDawnLeft" layoutX="14.0" layoutY="94.0" prefHeight="27.0" prefWidth="86.0" text="DDLeft">
+                        <Line fx:id="dawnDuskNowLine" endY="-100.0" layoutX="150.0" layoutY="80.0" />
+                        <Label fx:id="dawnDuskLeft" layoutX="14.0" layoutY="94.0" prefHeight="27.0" prefWidth="86.0" text="DDLeft">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="duskDawnRight" layoutX="208.0" layoutY="94.0" text="DDRight" textAlignment="RIGHT">
+                        <Label fx:id="dawnDuskRight" layoutX="208.0" layoutY="94.0" text="DDRight" textAlignment="RIGHT">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                         <ImageView fx:id="duskDawnGraphic" fitHeight="51.0" fitWidth="53.0" layoutX="124.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true" />
+                        <Circle centerX="150.0" centerY="80.0" fill="DODGERBLUE" radius="9.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </Pane>
                </children>

@@ -162,10 +162,38 @@ public class Controller {
         barChartPrecip.setCategoryGap(0);
 
         //Populate dawn dusk timings
-        dawnDuskTimings.setText("BIGTEXT");
 
 
-        dawnDuskNowLine = new Line(0, 0, 100, 100);
+        double dawnTime = 0.0;
+        double duskTime = 1.0;
+        double nowTime = 0.5;
+        double ddNowLineLength = 50.0;
+        double ddNowLineInset = 0.0;
+        double ddProportion;
+
+        if (nowTime > 0) { //ie. in daytime
+            dawnDuskLeft.setText("dawn" + dawnTime);
+            dawnDuskRight.setText("dusk" + duskTime);
+
+
+            ddProportion = (nowTime - dawnTime) / (duskTime - dawnTime);
+
+            ddProportion = 1.0;
+
+            dawnDuskRight.setText(Double.toString(ddProportion));
+
+
+            dawnDuskNowLine.setEndX(ddNowLineLength * Math.sin(ddProportion * Math.PI * 2));
+            dawnDuskNowLine.setEndY(ddNowLineLength * Math.cos(ddProportion * Math.PI * 2));
+
+
+
+
+
+        } else {
+            dawnDuskLeft.setText("dusk" + duskTime);
+            dawnDuskRight.setText("dawn" + dawnTime);
+        }
 
 
 
