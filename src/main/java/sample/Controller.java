@@ -85,7 +85,13 @@ public class Controller {
     Label pollenCount;
 
     @FXML
-    Label dawnDuskTimings;
+    Label dawnDuskLeft;
+
+    @FXML
+    Label dawnDuskRight;
+
+    @FXML
+    Line dawnDuskNowLine;
 
     @FXML
     ImageView toggleRealFeel;
@@ -157,17 +163,9 @@ public class Controller {
 
         //Populate dawn dusk timings
         dawnDuskTimings.setText("BIGTEXT");
-        Line testline = new Line(0.0, 0.0, 50.0, 50.0);
 
-        Group ddRadial = new Group(testline);
 
-        Scene ddScene = new Scene(ddRadial);
-
-        Stage ddStage = new Stage();
-
-        ddStage.setScene(ddScene);
-
-        ddStage.show();
+        dawnDuskNowLine = new Line(0, 0, 100, 100);
 
 
 
