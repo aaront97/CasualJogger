@@ -64,7 +64,7 @@ public class GoogleAPI {
                     properties.getJSONObject("geometry").getJSONObject("location").getDouble("lng"));
             String formatted_address = properties.getString("formatted_address");
 
-            if(!formatted_address.contains(city)){
+            if(!formatted_address.contains(city.split(",")[0])){
                 throw new LocationNotFoundException(city);
             }
 
