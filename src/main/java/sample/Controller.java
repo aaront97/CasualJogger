@@ -10,7 +10,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import sample.api.*;
 
@@ -130,6 +131,9 @@ public class Controller {
     ScrollPane scrollPane;
 
     @FXML
+    AnchorPane anchorPane;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -184,11 +188,23 @@ public class Controller {
             scrollPane.getScene().getStylesheets().clear();
             scrollPane.getScene().getStylesheets().add(
                     getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
-        } else {            toggleNightMode.setImage(toggledImage);
+            System.out.println("We ahve reached this");
+            anchorPane.setBackground(new Background(new BackgroundFill(Color.rgb(40, 40, 40),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
+        } else {
+            toggleNightMode.setImage(toggledImage);
             toggleNightMode.setImage(notToggledImage);
             scrollPane.getScene().getStylesheets().clear();
             scrollPane.getScene().getStylesheets().add(
                     getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
+
+            // Overwrite the background colour
+            int colour = weatherData.currentUV;
+            int rgbRed = Math.round((float) (40 + colour * 60.0 / 7.0));
+            int rgbGreen = Math.round((float) (40 + colour * 80.0 / 7.0));
+            int rgbBlue = Math.round((float) (40 + colour * 245.0 / 7.0));
+            anchorPane.setBackground(new Background(new BackgroundFill(Color.rgb(150, 40, 40),
+                    CornerRadii.EMPTY, Insets.EMPTY)));
         if (isFeelTemp) {
             toggleRealFeel.setImage(toggledImage);
         } else {
