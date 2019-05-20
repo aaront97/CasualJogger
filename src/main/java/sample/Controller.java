@@ -200,7 +200,33 @@ public class Controller {
 
 
         // Setting the notifications text
-        WeatherNotificationLabel.setText("⚠ HAHAH");
+
+        String display = "";
+        if (Math.round(weatherData.currentTemperature) > 35) {
+            display += "⚠ High temperature of " + Math.round(weatherData.currentTemperature) + "°C!\n";
+        } else if (Math.round(weatherData.currentTemperature) < 5) {
+            display += "⚠ Low temperature of " + Math.round(weatherData.currentTemperature) + "°C!\n";
+        }
+        if (Math.round(weatherData.currentWindSpeed) > 20) {
+            display += "⚠ Strong winds of " + Math.round(weatherData.currentWindSpeed) + "mph!\n";
+        }
+        if (Math.round(weatherData.currentUV) > 3) {
+            display += "⚠ High UV Index of " + Math.round(weatherData.currentUV) + "!\n";
+        }
+        if (Math.round(weatherData.currentAQI) > 6) {
+            display += "⚠ Very Low Air Quality!\n";
+        }
+        if (weatherData.currentPollen != null && weatherData.currentPollen.equals("Very High")) {
+            display += "⚠ Very High Pollen count!\n";
+        }
+
+
+        if (display.equals("")) {
+            display = "Great weather, nothing to display.\nJog on!";
+        }
+        WeatherNotificationLabel.setText(display);
+
+
 
 
         // Setting the label above the graph and the summary to displayed day
@@ -237,7 +263,7 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
-        // Draw now li  ne for graphs
+        // Draw now line for graphs
         if (currentlyDisplayedDay > 0) {
             nowLine.setVisible(false);
             nowLabel.setVisible(false);
