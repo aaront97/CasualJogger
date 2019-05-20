@@ -44,9 +44,6 @@ public class Controller {
     Label windLabel;
 
     @FXML
-    Label NotificationLabel;
-
-    @FXML
     TextField cityName;
 
     @FXML
@@ -134,6 +131,9 @@ public class Controller {
     ScrollPane scrollPane;
 
     @FXML
+    Label WeatherNotificationLabel;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -176,7 +176,6 @@ public class Controller {
 
     @FXML
     public void updateWeatherData(WeatherData weatherData) {
-        NotificationLabel.setText(weatherData.location);
 
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
@@ -198,6 +197,11 @@ public class Controller {
         } else {
             toggleRealFeel.setImage(notToggledImage);
         }
+
+
+        // Setting the notifications text
+        WeatherNotificationLabel.setText("⚠ HAHAH");
+
 
         // Setting the label above the graph and the summary to displayed day
         Calendar c = Calendar.getInstance();

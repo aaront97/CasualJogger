@@ -125,10 +125,15 @@
                         </GridPane>
                     </children>
                 </HBox>
-                <HBox layoutX="5.0" layoutY="270.0" prefHeight="68.0" prefWidth="289.0">
-                    <children>
-                        <Label fx:id="NotificationLabel" text="Notifications" wrapText="true" />
-                    </children></HBox>
+            <Pane layoutX="19.0" layoutY="252.0" prefHeight="86.0" prefWidth="257.0">
+               <children>
+                        <Label fx:id="NotificationLabel" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" prefHeight="21.0" prefWidth="230.0" text="Today's weather alerts:" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="WeatherNotificationLabel" alignment="TOP_LEFT" layoutX="20.0" layoutY="29.0" prefHeight="47.0" prefWidth="223.0" text="Great weather! Nothing to display!" wrapText="true" />
+               </children>
+            </Pane>
                 <HBox layoutX="2.0" layoutY="338.0" prefHeight="201.0" prefWidth="296.0">
                     <children>
                         <GridPane prefHeight="201.0" prefWidth="298.0">
