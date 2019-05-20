@@ -127,6 +127,9 @@ public class Controller {
     Label nowLabel;
 
     @FXML
+    ScrollPane scrollPane;
+
+    @FXML
     protected void ClickMeHandler(Event event) {
         System.out.println(lowerToggle.isSelected());
     }
@@ -167,6 +170,7 @@ public class Controller {
         updateWeatherData(weatherData);
     }
 
+    @FXML
     public void updateWeatherData(WeatherData weatherData) {
         NotificationLabel.setText(weatherData.location);
 
@@ -177,9 +181,14 @@ public class Controller {
         // Setting the toggles
         if (isNightMode) {
             toggleNightMode.setImage(toggledImage);
-        } else {
+            scrollPane.getScene().getStylesheets().clear();
+            scrollPane.getScene().getStylesheets().add(
+                    getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
+        } else {            toggleNightMode.setImage(toggledImage);
             toggleNightMode.setImage(notToggledImage);
-        }
+            scrollPane.getScene().getStylesheets().clear();
+            scrollPane.getScene().getStylesheets().add(
+                    getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
         if (isFeelTemp) {
             toggleRealFeel.setImage(toggledImage);
         } else {
@@ -220,7 +229,7 @@ public class Controller {
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
-        // Draw now line for graphs
+        // Draw now li  ne for graphs
         if (currentlyDisplayedDay > 0) {
             nowLine.setVisible(false);
             nowLabel.setVisible(false);
@@ -269,7 +278,7 @@ public class Controller {
 
             if(apiCallLimitExceeded){
                airQuality.setStyle("-fx-font: 11 system;");
-               airQuality.setText("API Call Limit Exceeded");
+               airQuality.setText("API Call Limit\n Exceeded");
                pollenCount.setStyle("-fx-font: 11 system;");
                pollenCount.setText("API Call Limit Exceeded");
             }
@@ -344,19 +353,25 @@ public class Controller {
             if(aqiMax == null){
                 airQuality.setStyle("-fx-font: 11 system;");
                 airQuality.setWrapText(true);
-                airQuality.setText("API Call Limit Exceeded");
+                airQuality.setText("API Call Limit\nExceeded");
 
                 pollenCount.setStyle("-fx-font: 11 system;");
                 pollenCount.setWrapText(true);
-                pollenCount.setText("API Call Limit Exceeded");
+                pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
                 airQuality.setStyle("-fx-font: 11 system;");
                 airQuality.setWrapText(true);
-                aqiMax = extractHourFromString(aqiMax);
-                aqiMin = extractHourFromString(aqiMin);
-                airQuality.setText("Max: " + Math.round(weatherData.maxAQIForecast[index]) + " at " + aqiMax +
-                                   "Min: " + Math.round(weatherData.minAQIForecast[index]) + " at " + aqiMin);
+                System.out.println("Aqi Max: " + aqiMax);
+                SimpleDateFormat parsingFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                try {
+                    airQuality.setText("Max: " + Math.round(weatherData.maxAQIForecast[index]) + " at "
+                            + format.format(parsingFormat.parse(aqiMax)) + "\n" +
+                            "Min: " + Math.round(weatherData.minAQIForecast[index]) + " at "
+                            + format.format(parsingFormat.parse(aqiMin)));
+                } catch (java.text.ParseException e) {
+                    e.printStackTrace();
+                }
 
                 pollenCount.setStyle("-fx-font: 11 system;");
                 pollenCount.setWrapText(true);
