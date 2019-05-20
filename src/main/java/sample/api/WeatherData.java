@@ -61,45 +61,46 @@ public class WeatherData {
 
         //BREEZOMETER COMMENTED DAILY LIMIT EXCEEDED
 
-        currentAQI = breezometerData.getCurrentAirQuality();
-        List<BreezometerRecord> records = breezometerData.getFutureAirQuality();
-        //assumes order of linked list
-        for(int i = 0; i < records.size(); i++){
-            if(records.get(i).key.equals("max")){
-                maxAQITime[i] = records.get(i).datetime;
-                maxAQIForecast[i] = records.get(i).value;
-            }
-            else{
-                minAQITime[i - minAQITime.length] = records.get(i).datetime;
-                minAQIForecast[i-minAQIForecast.length] = records.get(i).value;
-            }
-        }
-
-        //POLLEN
-        pollenLookupTable.put(1, "Very Low");
-        pollenLookupTable.put(2, "Low");
-        pollenLookupTable.put(3, "Moderate");
-        pollenLookupTable.put(4, "High");
-        pollenLookupTable.put(5, "Very High");
-
-        List<BreezometerRecord> pollenReadings = breezometerData.getPollenCount();
-        for(int i = 0; i < pollenReadings.size(); i++){
-            int value = pollenReadings.get(i).value;
-            String result;
-            if(value < 1){
-                result = "Negligible";
-            }
-            else{
-                result = pollenLookupTable.getOrDefault(value, "Very High");
+        try {
+            currentAQI = breezometerData.getCurrentAirQuality();
+            List<BreezometerRecord> records = breezometerData.getFutureAirQuality();
+            //assumes order of linked list
+            for (int i = 0; i < records.size(); i++) {
+                if (records.get(i).key.equals("max")) {
+                    maxAQITime[i] = records.get(i).datetime;
+                    maxAQIForecast[i] = records.get(i).value;
+                } else {
+                    minAQITime[i - minAQITime.length] = records.get(i).datetime;
+                    minAQIForecast[i - minAQIForecast.length] = records.get(i).value;
+                }
             }
 
-            if(i == 0 ){
-                currentPollen = result;
-            }
-            else{
-                pollen[i - 1] = result;
-            }
+            //POLLEN
+            pollenLookupTable.put(1, "Very Low");
+            pollenLookupTable.put(2, "Low");
+            pollenLookupTable.put(3, "Moderate");
+            pollenLookupTable.put(4, "High");
+            pollenLookupTable.put(5, "Very High");
 
+            List<BreezometerRecord> pollenReadings = breezometerData.getPollenCount();
+            for (int i = 0; i < pollenReadings.size(); i++) {
+                int value = pollenReadings.get(i).value;
+                String result;
+                if (value < 1) {
+                    result = "Negligible";
+                } else {
+                    result = pollenLookupTable.getOrDefault(value, "Very High");
+                }
+
+                if (i == 0) {
+                    currentPollen = result;
+                } else {
+                    pollen[i - 1] = result;
+                }
+
+            }
+        } catch (Exception e) {
+            System.err.println("Breezometer API calls exceeded");
         }
         //END OF BREEZOMETER
 

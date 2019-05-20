@@ -280,7 +280,7 @@ public class Controller {
                airQuality.setStyle("-fx-font: 11 system;");
                airQuality.setText("API Call Limit\n Exceeded");
                pollenCount.setStyle("-fx-font: 11 system;");
-               pollenCount.setText("API Call Limit Exceeded");
+               pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
                 airQuality.setText(Math.round(weatherData.currentAQI) + "");

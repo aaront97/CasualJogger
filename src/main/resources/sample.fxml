@@ -237,7 +237,7 @@
                                                     <image>
                                                         <Image url="@images/windBearing.png" />
                                                     </image></ImageView>
-                                                <Label fx:id="windSpeed" alignment="CENTER" text="Label" translateX="-10.0">
+                                                <Label fx:id="windSpeed" alignment="CENTER" text="Label" textAlignment="CENTER" translateX="-10.0">
                                                     <font>
                                                         <Font size="12.0" />
                                                     </font>
@@ -252,7 +252,7 @@
                                             <font>
                                                 <Font size="20.0" />
                                             </font></Label>
-                                        <Label fx:id="uvIndex" text="Label">
+                                        <Label fx:id="uvIndex" text="Label" textAlignment="CENTER">
                                             <font>
                                                 <Font size="12.0" />
                                             </font></Label>
@@ -264,7 +264,7 @@
                                             <font>
                                                 <Font size="20.0" />
                                             </font></Label>
-                                        <Label fx:id="pollenCount" text="Label">
+                                        <Label fx:id="pollenCount" text="Label" textAlignment="CENTER">
                                             <font>
                                                 <Font size="12.0" />
                                             </font></Label>
@@ -276,7 +276,7 @@
                                             <font>
                                                 <Font size="20.0" />
                                             </font></Label>
-                                        <Label fx:id="airQuality" text="Label">
+                                        <Label fx:id="airQuality" text="Label" textAlignment="CENTER">
                                             <font>
                                                 <Font size="12.0" />
                                             </font></Label>
