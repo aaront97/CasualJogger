@@ -26,13 +26,13 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <content>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="865.0" prefWidth="300.0">
             <children>
                 <HBox alignment="CENTER" layoutY="8.0" mouseTransparent="false" prefHeight="51.0" prefWidth="300.0">
                     <children>
-                        <TextField fx:id="cityName" alignment="CENTER" prefHeight="37.0" prefWidth="190.0" text="Cambridge">
+                        <TextField fx:id="cityName" alignment="CENTER" onAction="#refreshHandler" prefHeight="37.0" prefWidth="190.0" text="Cambridge">
                             <font>
                                 <Font size="18.0" />
                             </font>
