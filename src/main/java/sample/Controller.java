@@ -97,7 +97,16 @@ public class Controller {
     Label dawnDuskRight;
 
     @FXML
+    Label dawnDuskLeftTime;
+
+    @FXML
+    Label dawnDuskRightTime;
+
+    @FXML
     Line dawnDuskNowLine;
+
+    @FXML
+    Label dawnDuskNowLabel;
 
     @FXML
     ImageView dawnDuskCentreGraphic;
@@ -228,11 +237,12 @@ public class Controller {
         }
 
         //Dawn Dusk variables
-        double dawnTime = 0.0;
-        double duskTime = 1.0;
-        double nowTime = 0.0;
-        double ddNowLineLength = 80.0;
-        double ddNowLineInset = 10.0;
+        int[] dawnTime = weatherData.sunriseTimes;
+        int[] duskTime = weatherData.sunsetTimes;
+
+        double ddNowLineLength = 90.0;
+        double ddNowLineInset = 20.0;
+        dawnDuskNowLine.setStrokeWidth(2.0);
         double ddProportion;
         dawnDuskCentreGraphic.setImage(ddSun);
 
@@ -264,20 +274,43 @@ public class Controller {
 
             //Dawn Dusk Logic for today
             dawnDuskNowLine.setOpacity(1.0);
-
-            if (nowTime > 0) { //ie. in daytime
+            long ddNowTimeUnix = (new Date()).getTime()/1000L;
+            if (ddNowTimeUnix > dawnTime[currentlyDisplayedDay]){ //ie. in daytime
                 dawnDuskLeft.setText("Sunrise");
                 dawnDuskRight.setText("Sunset");
-                ddProportion = (nowTime - dawnTime) / (duskTime - dawnTime);
+                ddProportion = (ddNowTimeUnix - dawnTime[currentlyDisplayedDay])
+                        / (double) (duskTime[currentlyDisplayedDay] - dawnTime[currentlyDisplayedDay]);
+
+
+                Date ddDawnTime = new Date(dawnTime[currentlyDisplayedDay]*1000L);
+                Date ddDuskTime = new Date(duskTime[currentlyDisplayedDay]*1000L);
+
+                dawnDuskLeftTime.setText((new SimpleDateFormat("HH:mm")).format(ddDawnTime));
+                dawnDuskRightTime.setText((new SimpleDateFormat(("HH:mm")).format(ddDuskTime)));
+
+
             } else {
                 dawnDuskLeft.setText("Sunset");
                 dawnDuskRight.setText("Sunrise");
-                ddProportion = (nowTime - duskTime) / (dawnTime - duskTime);
+                ddProportion = (ddNowTimeUnix - dawnTime[currentlyDisplayedDay])
+                        / (double) (duskTime[currentlyDisplayedDay] - dawnTime[currentlyDisplayedDay]);
+                dawnDuskLeftTime.setText(String.valueOf(duskTime[0]));
+                dawnDuskRightTime.setText(String.valueOf(dawnTime[0]));
             }
             dawnDuskNowLine.setEndX(ddNowLineLength * Math.sin((ddProportion - 0.5)*Math.PI));
             dawnDuskNowLine.setStartX(ddNowLineInset * Math.sin((ddProportion - 0.5)*Math.PI));
             dawnDuskNowLine.setEndY(ddNowLineLength * -Math.cos((ddProportion - 0.5)*Math.PI));
             dawnDuskNowLine.setStartY(ddNowLineInset * -Math.cos((ddProportion - 0.5)*Math.PI));
+
+            // Calculate margin by from time
+            LocalDateTime localTime = LocalDateTime.now();
+            float past = localTime.getHour() * 60 + localTime.getMinute();
+            float proportion = past / (24*60);
+            int margin = Math.round(50 + 232 * proportion);
+            DecimalFormat decimalFormat = new DecimalFormat("00");
+
+            dawnDuskNowLabel.setText("Now\n" + decimalFormat.format(localTime.getHour()) + ":"
+                    + decimalFormat.format(localTime.getMinute()));
 
 
         } else {
@@ -333,7 +366,8 @@ public class Controller {
             dawnDuskLeft.setText("Sunrise");
             dawnDuskRight.setText("Sunset");
 
-            dawnDuskNowLine.setOpacity(0.0);
+
+            dawnDuskNowLabel.setOpacity(0.0);
 
 
 
