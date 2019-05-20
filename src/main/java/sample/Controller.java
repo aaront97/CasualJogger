@@ -140,7 +140,6 @@ public class Controller {
 
     @FXML
     protected void refreshHandler(Event event){
-        WeatherData newWeatherData;
         try{
            weatherData = DataQuery.queryData(cityName.getText() + ", United Kingdom");
         }
