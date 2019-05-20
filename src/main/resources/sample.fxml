@@ -160,12 +160,12 @@
                                 </BarChart>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <RadioButton fx:id="todayButton" mnemonicParsing="false" onMouseClicked="#todayButtonClicked" />
+                                        <RadioButton fx:id="todayButton" mnemonicParsing="false" onMouseClicked="#todayButtonClicked" selected="true" />
                                         <RadioButton fx:id="tomorrowButton" mnemonicParsing="false" onMouseClicked="#tomorrowButtonClicked" />
                                         <RadioButton fx:id="dayAfterTomorrowButton" mnemonicParsing="false" onMouseClicked="#dayAfterTomorrowButtonClicked" />
                                     </children>
                                 </HBox>
-                                <Line fx:id="nowLine" endY="100.0" stroke="RED" strokeWidth="1.5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
+                                <Line fx:id="nowLine" endY="90.0" stroke="RED" strokeWidth="1.5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
                                     <GridPane.margin>
                                         <Insets left="166.0" top="10.0" />
                                     </GridPane.margin></Line>
