@@ -23,7 +23,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <content>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="865.0" prefWidth="300.0">
             <children>
@@ -160,9 +160,28 @@
                                 </BarChart>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <RadioButton fx:id="todayButton" mnemonicParsing="false" onMouseClicked="#todayButtonClicked" selected="true" />
-                                        <RadioButton fx:id="tomorrowButton" mnemonicParsing="false" onMouseClicked="#tomorrowButtonClicked" />
-                                        <RadioButton fx:id="dayAfterTomorrowButton" mnemonicParsing="false" onMouseClicked="#dayAfterTomorrowButtonClicked" />
+                              <Line endX="50.0">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </Line>
+                                        <RadioButton fx:id="todayButton" maxWidth="21.0" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#todayButtonClicked" prefWidth="21.0" selected="true">
+                                 <HBox.margin>
+                                    <Insets left="3.0" right="3.0" />
+                                 </HBox.margin></RadioButton>
+                                        <RadioButton fx:id="tomorrowButton" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#tomorrowButtonClicked" prefWidth="21.0">
+                                 <HBox.margin>
+                                    <Insets left="3.0" right="3.0" />
+                                 </HBox.margin></RadioButton>
+                                        <RadioButton fx:id="dayAfterTomorrowButton" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#dayAfterTomorrowButtonClicked" prefWidth="21.0">
+                                 <HBox.margin>
+                                    <Insets left="3.0" right="3.0" />
+                                 </HBox.margin></RadioButton>
+                              <Line endX="50.0">
+                                 <HBox.margin>
+                                    <Insets left="20.0" />
+                                 </HBox.margin>
+                              </Line>
                                     </children>
                                 </HBox>
                                 <Line fx:id="nowLine" endY="90.0" stroke="RED" strokeWidth="1.5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
