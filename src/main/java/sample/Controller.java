@@ -140,7 +140,6 @@ public class Controller {
 
     @FXML
     protected void refreshHandler(Event event){
-        WeatherData newWeatherData;
         try{
            weatherData = DataQuery.queryData(cityName.getText() + ", United Kingdom");
         }
@@ -156,7 +155,7 @@ public class Controller {
         catch(LocationOutOfReachException e){
             Alert locationOutOfReachAlert = new Alert(Alert.AlertType.ERROR);
             locationOutOfReachAlert.setTitle("Location Out of Reach");
-            locationOutOfReachAlert.setContentText("Sorry our application does not handle locations outside the UK" +
+            locationOutOfReachAlert.setContentText("Sorry, our application does not currently handle locations outside the UK. " +
                     "Please enter a location within the UK.");
             locationOutOfReachAlert.setHeaderText(null);
             locationOutOfReachAlert.showAndWait();
