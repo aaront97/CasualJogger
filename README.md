@@ -6,4 +6,6 @@ If this happens, an error message 'API Call Limit Has been exceeded' will be sho
 To handle this, create a new account with Breezometer and replace the Breezometer variable in the apiKeys.json file. 
 This hindrance is due to the financial constraints imposed on this project. 
 
+Sign-up Link for Breezometer: 
+https://developers.breezometer.com/signup
 

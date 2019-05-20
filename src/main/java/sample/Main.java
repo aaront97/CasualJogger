@@ -19,7 +19,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("sample.fxml"));
 
         //System.out.println(Controller.extractHourFromTimestamp((long)weatherData.maxWindSpeedForecast[1]));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("CasualJogger");
         Scene scene = new Scene(loader.load(), 315, 540);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
         primaryStage.setScene(scene);
