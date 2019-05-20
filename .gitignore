@@ -2,3 +2,4 @@ out/
 .idea/
 **/apiKeys.json
 target/
+Thumbs.db
