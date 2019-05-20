@@ -8,6 +8,7 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -34,6 +35,9 @@ public class Controller {
     private Image notToggledImage = new Image(getClass().getClassLoader().getResource("images/notToggled.png").toString());
     private Image ddSun = new Image(getClass().getClassLoader().getResource("images/ddSun.png").toString());
     private Image ddMoon = new Image(getClass().getClassLoader().getResource("images/ddMoon.png").toString());
+    private Image ddCross = new Image(getClass().getClassLoader().getResource("images/ddCross.png").toString());
+
+
 
 
     @FXML
@@ -255,7 +259,7 @@ public class Controller {
         int[] dawnTime = weatherData.sunriseTimes;
         int[] duskTime = weatherData.sunsetTimes;
 
-        double ddNowLineLength = 90.0;
+        double ddNowLineLength = 100.0;
         double ddNowLineInset = 20.0;
         dawnDuskNowLine.setStrokeWidth(2.0);
         double ddProportion;
@@ -289,13 +293,16 @@ public class Controller {
             }
 
             //Dawn Dusk Logic for today
-            dawnDuskCentreGraphic.setImage(ddSun);
             dawnDuskNowLabel.setOpacity(1.0);
             dawnDuskNowLine.setOpacity(1.0);
+            dawnDuskCentreGraphic.setImage(ddSun);
+            dawnDuskCentreGraphic.setEffect(new GaussianBlur(3.0));
+
             long ddNowTimeUnix = (new Date()).getTime()/1000L;
             Date ddDawnTime = new Date(dawnTime[currentlyDisplayedDay]*1000L);
             Date ddDuskTime = new Date(duskTime[currentlyDisplayedDay]*1000L);
-            if (ddNowTimeUnix > dawnTime[currentlyDisplayedDay]){ //ie. in daytime
+            if (ddNowTimeUnix > dawnTime[currentlyDisplayedDay] &&
+                    ddNowTimeUnix < duskTime[currentlyDisplayedDay]){ //ie. in daytime
 
                 ddProportion = (ddNowTimeUnix - dawnTime[currentlyDisplayedDay])
                         / (double) (duskTime[currentlyDisplayedDay] - dawnTime[currentlyDisplayedDay]);
@@ -305,8 +312,18 @@ public class Controller {
                 dawnDuskNowLine.setEndY(ddNowLineLength * -Math.cos((ddProportion - 0.5)*Math.PI));
                 dawnDuskNowLine.setStartY(ddNowLineInset * -Math.cos((ddProportion - 0.5)*Math.PI));
 
+                dawnDuskCentreGraphic.setImage(ddSun);
+                dawnDuskCentreGraphic.setFitHeight(53.0);
+                dawnDuskCentreGraphic.setFitWidth(53.0);
+                dawnDuskCentreGraphic.setX(0.0);
+                dawnDuskCentreGraphic.setY(0.0);
+
             } else {
                 dawnDuskCentreGraphic.setImage(ddMoon);
+                dawnDuskCentreGraphic.setFitHeight(100.0);
+                dawnDuskCentreGraphic.setFitWidth(100.0);
+                dawnDuskCentreGraphic.setY(-50.0);
+                dawnDuskCentreGraphic.setX(-24.0);
                 dawnDuskNowLine.setOpacity(0.0);
             }
 
@@ -383,6 +400,11 @@ public class Controller {
             Date ddDawnTime = new Date(dawnTime[currentlyDisplayedDay]*1000L);
             Date ddDuskTime = new Date(duskTime[currentlyDisplayedDay]*1000L);
             dawnDuskNowLabel.setOpacity(0.0);
+            dawnDuskCentreGraphic.setImage(ddCross);
+            dawnDuskCentreGraphic.setFitHeight(25.0);
+            dawnDuskCentreGraphic.setFitWidth(25.0);
+            dawnDuskCentreGraphic.setX(13.0);
+            dawnDuskCentreGraphic.setY(11.0);
 
             dawnDuskLeftTime.setText((new SimpleDateFormat("HH:mm")).format(ddDawnTime));
             dawnDuskRightTime.setText((new SimpleDateFormat(("HH:mm")).format(ddDuskTime)));
