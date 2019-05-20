@@ -2,6 +2,7 @@ package sample.api;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ public class DarkSkyAPI {
 
     private static final String address = "https://api.darksky.net/forecast/";
 
-    public static DarkSkyData getDarkSkyData(String darkSkyKey, LatLonInfo latLonInfo) {
+    public static DarkSkyData getDarkSkyData(String darkSkyKey, LatLonInfo latLonInfo) throws LocationOutOfReachException {
 
         if (darkSkyKey == null) {
             System.err.println("API key not found for DarkSky");
@@ -43,7 +44,11 @@ public class DarkSkyAPI {
 
             return darkSkyData;
 
-        } catch (Exception e) {
+        }
+        catch(LocationOutOfReachException e){
+            throw new LocationOutOfReachException();
+        }
+        catch (IOException e) {
             System.err.println("Something went wrong while looking up Dark Sky");
             e.printStackTrace();
             return null;

@@ -12,10 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
-import sample.api.APIReadException;
-import sample.api.DataQuery;
-import sample.api.LocationNotFoundException;
-import sample.api.WeatherData;
+import sample.api.*;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -138,15 +135,24 @@ public class Controller {
     protected void refreshHandler(Event event){
         WeatherData newWeatherData;
         try{
-           weatherData = DataQuery.queryData(cityName.getText());
+           weatherData = DataQuery.queryData(cityName.getText() + ", United Kingdom");
         }
         catch(LocationNotFoundException e){
             Alert locationAlert = new Alert(Alert.AlertType.ERROR);
             locationAlert.setTitle("Location Not Found");
             locationAlert.setContentText("Sorry, we can't find weather data for " +
-                    e.getMessage() + ". Please enter a valid location");
+                    e.getMessage() + ". Please enter a valid city name in the UK. ");
             locationAlert.setHeaderText(null);
             locationAlert.showAndWait();
+            return;
+        }
+        catch(LocationOutOfReachException e){
+            Alert locationOutOfReachAlert = new Alert(Alert.AlertType.ERROR);
+            locationOutOfReachAlert.setTitle("Location Out of Reach");
+            locationOutOfReachAlert.setContentText("Sorry our application does not handle locations outside the UK" +
+                    "Please enter a location within the UK.");
+            locationOutOfReachAlert.setHeaderText(null);
+            locationOutOfReachAlert.showAndWait();
             return;
         }
         catch(APIReadException e){

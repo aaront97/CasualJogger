@@ -1,6 +1,7 @@
 package sample.api;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
@@ -16,7 +17,7 @@ public class DarkSkyData {
     public ArrayList<DailyWeatherSnapshot> daily;
     public ArrayList<HourlyWeatherSnapshot> previous = new ArrayList<>();
 
-    DarkSkyData(JSONObject jsonObject) {
+    DarkSkyData(JSONObject jsonObject) throws LocationOutOfReachException {
 
         try {
             currently = new CurrentWeatherSnapshat(jsonObject.getJSONObject("currently"));
@@ -24,6 +25,11 @@ public class DarkSkyData {
             {
                 minutely = new ArrayList<>();
                 JSONArray minutelyJson = jsonObject.getJSONObject("minutely").getJSONArray("data");
+                if(minutelyJson.length() == 0){
+                    throw new LocationOutOfReachException();
+                }
+
+
                 int len = minutelyJson.length();
                 for (int i = 0; i < len; i++) {
                     minutely.add(new MinutelyWeatherSnapshot(minutelyJson.getJSONObject(i)));
@@ -47,10 +53,10 @@ public class DarkSkyData {
                     daily.add(new DailyWeatherSnapshot(dailyJson.getJSONObject(i)));
                 }
             }
-        } catch (Exception e) {
-            System.err.println("Something went wrong while parsing DarkSky response JSON");
-            e.printStackTrace();
+        } catch (JSONException e) {
+            throw new LocationOutOfReachException();
         }
+
     }
 
     public void addPrevious(JSONObject jsonObject) {

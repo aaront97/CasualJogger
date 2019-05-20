@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 public class DataQuery {
 
-    public static WeatherData queryData(String cityName) throws LocationNotFoundException, APIReadException {
+    public static WeatherData queryData(String cityName) throws LocationNotFoundException, APIReadException, LocationOutOfReachException {
 
         String breezometerKey = "";
         String darkSkyKey = "";
@@ -42,7 +42,13 @@ public class DataQuery {
         BreezometerAPI breezometerAPI = new BreezometerAPI(breezometerKey,
                 Double.toString(latLonInfo.lat), Double.toString(latLonInfo.lon));
 
-        WeatherData weatherData = new WeatherData(darkSkyData, breezometerAPI);
+        WeatherData weatherData;
+        try{
+            weatherData = new WeatherData(darkSkyData, breezometerAPI);
+        }
+        catch(LocationOutOfReachException e){
+            throw new LocationOutOfReachException();
+        }
         weatherData.location = latLonInfo.address;
 
         return weatherData;

@@ -23,7 +23,9 @@ public class Main extends Application {
 
         //System.out.println(Controller.extractHourFromTimestamp((long)weatherData.maxWindSpeedForecast[1]));
         primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(loader.load(), 310, 540));
+        Scene scene = new Scene(loader.load(), 310, 540);
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
+        primaryStage.setScene(scene);
 
         Controller controller = loader.<Controller>getController();
         controller.updateWeatherData(weatherData);

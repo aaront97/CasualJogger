@@ -50,7 +50,7 @@ public class WeatherData {
     public int[] sunriseTimes = new int[3];
     public int[] sunsetTimes = new int[3];
 
-    WeatherData(DarkSkyData darkSkyData, BreezometerAPI breezometerData) {
+    WeatherData(DarkSkyData darkSkyData, BreezometerAPI breezometerData) throws LocationOutOfReachException {
         timestamp = darkSkyData.currently.time;
         currentTemperature = darkSkyData.currently.temperature;
         currentApparentTemperature = darkSkyData.currently.apparentTemperature;
@@ -101,6 +101,11 @@ public class WeatherData {
 //
 //        }
         //END OF BREEZOMETER
+
+        if(darkSkyData.minutely.size() == 0){
+            throw new LocationOutOfReachException();
+        }
+
         for (int i = 0; i < 60; i++) {
             immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
         }
