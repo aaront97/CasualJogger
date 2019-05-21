@@ -1,12 +1,5 @@
 package sample;
 
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -16,13 +9,7 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -31,11 +18,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
-import sample.api.APIReadException;
-import sample.api.DataQuery;
-import sample.api.LocationNotFoundException;
-import sample.api.LocationOutOfReachException;
-import sample.api.WeatherData;
+import sample.api.*;
+
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class Controller {
 
@@ -316,7 +306,7 @@ public class Controller {
             int margin = Math.round(50 + 232 * proportion);
 
             // Apply margin and set text
-            GridPane.setMargin(nowLine, new Insets(15, 0, 0, margin));
+            GridPane.setMargin(nowLine, new Insets(11, 0, 0, margin));
             GridPane.setMargin(nowLabel, new Insets(-7, 0, 0, margin - 17));
             DecimalFormat decimalFormat = new DecimalFormat("00");
             nowLabel.setText(decimalFormat.format(localTime.getHour()) + ":" + decimalFormat.format(localTime.getMinute()));

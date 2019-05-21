@@ -26,7 +26,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <content>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="865.0" prefWidth="300.0">
             <children>
@@ -192,9 +192,9 @@
                               </Line>
                                     </children>
                                 </HBox>
-                                <Line fx:id="nowLine" endY="84.25" stroke="RED" strokeWidth="1.5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
+                                <Line fx:id="nowLine" endY="95.0" stroke="RED" strokeWidth="1.5" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BASELINE">
                                     <GridPane.margin>
-                                        <Insets left="166.0" top="15.0" />
+                                        <Insets left="166.0" top="11.0" />
                                     </GridPane.margin></Line>
                                 <Label fx:id="nowLabel" text="16:43" textFill="RED" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP">
                                     <GridPane.margin>
