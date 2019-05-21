@@ -13,7 +13,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         // Assume starting city is Cambridge
-        WeatherData weatherData = DataQuery.queryData("Cambridge");
+        WeatherData weatherData = DataQuery.queryData("London");
         System.out.println(weatherData);
 
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("sample.fxml"));
