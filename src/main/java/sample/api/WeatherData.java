@@ -5,10 +5,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * The compound data object for the API section.
+ * The only data object used by the UI.
+ */
 public class WeatherData {
+
     //associates quantitative pollen indexes to qualitative descriptions
     private static final HashMap<Integer, String> pollenLookupTable = new HashMap<>();
-
     public String location;
 
     public int timestamp;
@@ -52,6 +56,12 @@ public class WeatherData {
     public int[] sunriseTimes = new int[3];
     public int[] sunsetTimes = new int[3];
 
+    /**
+     * Populates the fields using the two separate API data objects
+     * @param darkSkyData Populated by DarkSkyAPI
+     * @param breezometerData Populated by BreezometerAPI
+     * @throws LocationOutOfReachException If entered location is out of supported areas
+     */
     WeatherData(DarkSkyData darkSkyData, BreezometerAPI breezometerData) throws LocationOutOfReachException {
         timestamp = darkSkyData.currently.time;
         currentTemperature = darkSkyData.currently.temperature;
@@ -60,8 +70,8 @@ public class WeatherData {
         currentWindBearing = darkSkyData.currently.windBearing;
         currentUV = darkSkyData.currently.uvIndex;
 
-        //START OF BREEZOMETER
-
+        // Breezometer API has very limited number of free calls
+        // If the call limit is exceeded, then the relevant fields are as defaults
         try {
             currentAQI = breezometerData.getCurrentAirQuality();
             List<BreezometerRecord> records = breezometerData.getFutureAirQuality();
@@ -76,8 +86,8 @@ public class WeatherData {
                 }
             }
 
-            //building up the lookup table
-            //that associates quantitative pollen indexes to qualitative descriptions
+            // Building up the lookup table
+            // That associates quantitative pollen indexes to qualitative descriptions
             pollenLookupTable.put(1, "Very Low");
             pollenLookupTable.put(2, "Low");
             pollenLookupTable.put(3, "Moderate");
@@ -104,20 +114,20 @@ public class WeatherData {
         } catch (Exception e) {
             System.err.println("Breezometer API calls exceeded");
         }
-        //END OF BREEZOMETER
 
+        // Only some areas support minutely forecast
+        // Since we only aim to include the UK, this is not an issue
         if(darkSkyData.minutely.size() == 0){
-            //a null field for minutely indicates that the location is outside the UK
             throw new LocationOutOfReachException();
         }
 
+        // Get immediate precipitation chance for the rainmeter
         for (int i = 0; i < 60; i++) {
             immediatePrecipitationForecast[i] = darkSkyData.minutely.get(i).precipProbability;
         }
 
-
-
-        int[] cur = {0};    // lambda-expressions and final variables...
+        // Merge hourly data from previous hours and forecast
+        int[] cur = {0};    // Stupid lambda-expressions and final variables...
         darkSkyData.previous.forEach((HourlyWeatherSnapshot snapshot) -> {
             temperatureForecast[0][cur[0]] = snapshot.temperature;
             apparentTemperatureForecast[0][cur[0]] = snapshot.apparentTemperature;
@@ -134,6 +144,8 @@ public class WeatherData {
             cur[0]++;
         });
 
+        // Going through the hourly data points in search of max/min wind
+        // Only need to do it for tomorrow and the day after tomorrow
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < 24; j++) {
                 HourlyWeatherSnapshot snapshot = darkSkyData.hourly.get(24 - prevRecord + 24*i + j);
@@ -148,6 +160,7 @@ public class WeatherData {
             }
         }
 
+        // Max/min values for UV is already aggregated in daily snapshots
         for (int i = 0; i < 3; i++) {
             DailyWeatherSnapshot snapshot = darkSkyData.daily.get(i);
             sunriseTimes[i] = snapshot.sunriseTime;
@@ -160,6 +173,10 @@ public class WeatherData {
 
     }
 
+    /**
+     * Used for printing out the data contained in the object.
+     * Useful for debugging. System.out.println() uses this form.
+     */
     @Override
     public String toString() {
         Field[] fields = getClass().getFields();
@@ -168,6 +185,8 @@ public class WeatherData {
             try {
                 s.append(field.getName());
                 s.append(" = ");
+
+                // Printing out arrays is hard
                 if (field.getType().isArray()) {
                     if (field.getType().getComponentType().isArray()) {
                         s.append(Arrays.deepToString((Object[]) field.get(this)));
@@ -182,9 +201,11 @@ public class WeatherData {
                             s.append(Arrays.toString((Object[]) field.get(this)));
                         } catch (Exception e) {}
                     }
+
                 } else {
                     s.append(field.get(this));
                 }
+
                 s.append(" , ");
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
