@@ -274,8 +274,8 @@ public class Controller {
         String dayAfterTomorrow = c.get(Calendar.DAY_OF_MONTH) + " " +
                 c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK);
         String[] possibleGraphTexts = {"Today", "Tomorrow", dayAfterTomorrow};
-        String[] possibleSummaryTexts = {"Now", "Tomorrow", dayAfterTomorrow};
-        chartDayLabel.setText(possibleGraphTexts[currentlyDisplayedDay]);
+        String[] possibleSummaryTexts = {"Now", "Tomorrow's summary", dayAfterTomorrow + "'s summary"};
+        chartDayLabel.setText(possibleGraphTexts[currentlyDisplayedDay] + "'s temperature and precipitation");
         summaryLabel.setText(possibleSummaryTexts[currentlyDisplayedDay]);
 
         // Populate temperature graph
