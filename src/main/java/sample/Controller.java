@@ -190,10 +190,10 @@ public class Controller {
             scrollPane.getScene().getStylesheets().add(
                     getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
         } else {            toggleNightMode.setImage(toggledImage);
-        toggleNightMode.setImage(notToggledImage);
-        scrollPane.getScene().getStylesheets().clear();
-        scrollPane.getScene().getStylesheets().add(
-                getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
+            toggleNightMode.setImage(notToggledImage);
+            scrollPane.getScene().getStylesheets().clear();
+            scrollPane.getScene().getStylesheets().add(
+                    getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
         if (isFeelTemp) {
             toggleRealFeel.setImage(toggledImage);
         } else {
@@ -211,8 +211,8 @@ public class Controller {
             gc.fillArc(centre_x - outer_r, centre_y - outer_r,
                     outer_r * 2, outer_r * 2, 90 - (t + 1) * 6, 6, ArcType.ROUND);
         }
-        
-        gc.setFill(isNightMode ? Color.rgb(50, 50, 50) : Color.rgb(244, 244, 244));
+
+        gc.setFill(isNightMode ? Color.rgb(50, 50, 50) : Color.rgb(214, 228, 234));
         gc.fillOval(centre_x - inner_r, centre_y - inner_r, inner_r * 2, inner_r * 2);
 
         gc.setFill(isNightMode? Color.rgb(244, 244, 244) : Color.rgb(50, 50, 50));
@@ -221,7 +221,7 @@ public class Controller {
         gc.fillText("15", centre_x + outer_r + 5, centre_y + 5);
         gc.fillText("30", centre_x - 8, centre_y + outer_r + 17);
         gc.fillText("45", centre_x - outer_r - 21, centre_y + 5);
-        
+
         gc.fillText("Precipitation", centre_x - inner_r + 12, centre_y - 5);
         gc.fillText("(next hour)", centre_x - inner_r + 18, centre_y + 15);
 
@@ -229,7 +229,7 @@ public class Controller {
         // Setting the notifications text
 
         String display = "";
-        if (Math.round(weatherData.currentTemperature) > 35) {
+        if (Math.round(weatherData.currentTemperature) > 30) {
             display += "⚠ High temperature of " + Math.round(weatherData.currentTemperature) + "°C!\n";
         } else if (Math.round(weatherData.currentTemperature) < 5) {
             display += "⚠ Low temperature of " + Math.round(weatherData.currentTemperature) + "°C!\n";
@@ -237,14 +237,17 @@ public class Controller {
         if (Math.round(weatherData.currentWindSpeed) > 20) {
             display += "⚠ Strong winds of " + Math.round(weatherData.currentWindSpeed) + " mph!\n";
         }
-        if (Math.round(weatherData.currentUV) > 3) {
+        if (Math.round(weatherData.currentUV) > 4) {
             display += "⚠ High UV Index of " + Math.round(weatherData.currentUV) + "!\n";
         }
-        if (Math.round(weatherData.currentAQI) > 6) {
-            display += "⚠ Very Low Air Quality!\n";
+        if (weatherData.currentAQI != 0 && Math.round(weatherData.currentAQI) < 50) {
+            display += "⚠ Very Poor Air Quality!\n";
         }
         if (weatherData.currentPollen != null && weatherData.currentPollen.equals("Very High")) {
             display += "⚠ Very High Pollen count!\n";
+        }
+        if (weatherData.currentPollen != null && weatherData.currentPollen.equals("High")) {
+            display += "⚠ High Pollen count!\n";
         }
 
 
@@ -316,7 +319,7 @@ public class Controller {
         int[] dawnTime = weatherData.sunriseTimes;
         int[] duskTime = weatherData.sunsetTimes;
 
-        double ddNowLineLength = 100.0;
+        double ddNowLineLength = 80.0;
         double ddNowLineInset = 20.0;
         dawnDuskNowLine.setStrokeWidth(2.0);
         double ddProportion;
@@ -345,7 +348,7 @@ public class Controller {
                 pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
-                airQuality.setText(Math.round(weatherData.currentAQI) + "");
+                airQuality.setText(Math.round(weatherData.currentAQI) + "/100");
 
                 pollenCount.setText(weatherData.currentPollen);
             }
@@ -396,7 +399,7 @@ public class Controller {
             int margin = Math.round(50 + 232 * proportion);
             DecimalFormat decimalFormat = new DecimalFormat("00");
 
-            dawnDuskNowLabel.setText("Now\n" + decimalFormat.format(localTime.getHour()) + ":"
+            dawnDuskNowLabel.setText(decimalFormat.format(localTime.getHour()) + ":"
                     + decimalFormat.format(localTime.getMinute()));
 
 
@@ -531,8 +534,15 @@ public class Controller {
         return result;
     }
 
-    private static Color precipColor(double probability) {
-        return Color.color(1 - probability, 1 - probability, 1 - probability);
+    private Color precipColor(double probability) {
+        if (isNightMode) {
+            return Color.color(
+                    (254 + (1 - probability) * (255 - 254)) / 255,
+                    (92 + (1 - probability) * (255 - 92))  / 255,
+                    (0 + (1 - probability) * (255 - 0)) / 255);
+        } else {
+            return Color.color(1 - probability, 1 - probability, 1 - probability);
+        }
     }
 }
 
