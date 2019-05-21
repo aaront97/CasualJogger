@@ -316,10 +316,10 @@ public class Controller {
             int margin = Math.round(50 + 232 * proportion);
 
             // Apply margin and set text
-            GridPane.setMargin(nowLine, new Insets(10, 0, 0, margin));
-            GridPane.setMargin(nowLabel, new Insets(-4, 0, 0, margin -25));
+            GridPane.setMargin(nowLine, new Insets(15, 0, 0, margin));
+            GridPane.setMargin(nowLabel, new Insets(-7, 0, 0, margin - 17));
             DecimalFormat decimalFormat = new DecimalFormat("00");
-            nowLabel.setText("Now - " + decimalFormat.format(localTime.getHour()) + ":" + decimalFormat.format(localTime.getMinute()));
+            nowLabel.setText(decimalFormat.format(localTime.getHour()) + ":" + decimalFormat.format(localTime.getMinute()));
 
         }
 
