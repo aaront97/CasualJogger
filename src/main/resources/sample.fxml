@@ -51,7 +51,7 @@
                 </HBox>
                 <HBox layoutX="-1.0" layoutY="59.0" prefHeight="226.0" prefWidth="300.0">
                     <children>
-                        <GridPane prefHeight="152.0" prefWidth="184.0">
+                        <GridPane prefHeight="224.0" prefWidth="208.0">
                             <columnConstraints>
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
@@ -60,15 +60,15 @@
                                 <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="193.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label fx:id="mainTempLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="20 °C" textAlignment="CENTER">
+                                <Label fx:id="mainTempLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="20 °C" textAlignment="CENTER">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
                                 </Label>
-                                <Canvas fx:id="rainCanvas" height="191.0" width="184.0" GridPane.rowIndex="1" />
+                                <Canvas fx:id="rainCanvas" height="191.0" width="213.0" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
-                        <GridPane prefHeight="226.0" prefWidth="117.0">
+                        <GridPane prefHeight="225.0" prefWidth="78.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>

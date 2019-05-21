@@ -28,7 +28,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
 import sample.api.APIReadException;
 import sample.api.DataQuery;
 import sample.api.LocationNotFoundException;
@@ -64,7 +66,7 @@ public class Controller {
 
     @FXML
     Label mainTempLabel;
-    
+
     @FXML
     Canvas rainCanvas;
 
@@ -207,12 +209,32 @@ public class Controller {
         } else {
             toggleRealFeel.setImage(notToggledImage);
         }
-        
-        
+
+
         // Drawing the rainmeter
+
+        final int outer_r = 65, inner_r = 50;
+        final int centre_x = 108, centre_y = 82;
         GraphicsContext gc = rainCanvas.getGraphicsContext2D();
-        gc.setFill(Color.DARKRED);
-        gc.fillOval(24, 2, 160, 160);
+
+        for (int t = 0; t < 60; ++t) {
+            gc.setFill(precipColor(weatherData.immediatePrecipitationForecast[t]));
+            gc.fillArc(centre_x - outer_r, centre_y - outer_r,
+                    outer_r * 2, outer_r * 2, 90 - (t + 1) * 6, 6, ArcType.ROUND);
+        }
+        
+        gc.setFill(isNightMode ? Color.rgb(50, 50, 50) : Color.rgb(244, 244, 244));
+        gc.fillOval(centre_x - inner_r, centre_y - inner_r, inner_r * 2, inner_r * 2);
+
+        gc.setFill(isNightMode? Color.rgb(244, 244, 244) : Color.rgb(50, 50, 50));
+        gc.setFont(new Font(14));
+        gc.fillText("Now", centre_x - 14, centre_y - outer_r - 7);
+        gc.fillText("15", centre_x + outer_r + 5, centre_y + 5);
+        gc.fillText("30", centre_x - 8, centre_y + outer_r + 17);
+        gc.fillText("45", centre_x - outer_r - 21, centre_y + 5);
+        
+        gc.fillText("Precipitation", centre_x - inner_r + 12, centre_y - 5);
+        gc.fillText("(next hour)", centre_x - inner_r + 18, centre_y + 15);
 
 
         // Setting the notifications text
@@ -504,11 +526,15 @@ public class Controller {
         drawScene(weatherData);
     }
 
-    private String extractHourFromString(String date){
+    private static String extractHourFromString(String date){
         String time = date.split("T")[1];
         int hour = Integer.parseInt(time.substring(0,2));
         String result = hour + " h";
         return result;
+    }
+
+    private static Color precipColor(double probability) {
+        return Color.color(1 - probability, 1 - probability, 1 - probability);
     }
 }
 
