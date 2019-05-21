@@ -29,8 +29,5 @@ This hindrance is due to the financial constraints imposed on this project.
 Sign-up Link for Breezometer: 
 https://developers.breezometer.com/signup
 
--Our location queries are restricted to only places within the UK. This is because the API provider does not provide weather data meeting our requirements for locations outside the UK. 
-
-
-
+-Our location queries are restricted to only places within the UK. This is because the API provider does not provide weather data meeting our requirements for locations outside the UK.
 
