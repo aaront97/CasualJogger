@@ -414,14 +414,13 @@ public class Controller {
             windBearing.setVisible(false);
             windBearing.setTranslateX(-1000);
 
-
+            windSpeed.setTranslateX(-15);
             windSpeed.setStyle("-fx-font: 11 system;");
             windSpeed.setWrapText(true);
-
             SimpleDateFormat format = new SimpleDateFormat("h a");     // (1-12) am/pm
-            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + " mph at "
-                    + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + " \n" +
-                    "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + " mph at "
+            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + "mph at "
+                    + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + "\n" +
+                    "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at "
                     + format.format(new Date((long)weatherData.minWindSpeedTime[index] * 1000)));
 
 
