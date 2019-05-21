@@ -5,7 +5,12 @@ Target systems:
 -Computers with Java and JavaFX installed, with Java 8 and higher. 
 
 Running the app:
-//TODO
+We propose the use of IntelliJ to run our weather app.
+-Extract the contents of the zip folder.
+-Ensure IntelliJ, JavaFX, and Java 8+ are installed.
+-Import / Open the project as a Maven project.
+-Once all dependencies are resolved, run the main method of the Main class.
+
 
 External Libraries Used:
 -org.json, a library to manipulate JSON objects, which we included as a Maven dependency. https://mvnrepository.com/artifact/org.json/json/20140107
@@ -24,4 +29,5 @@ This hindrance is due to the financial constraints imposed on this project.
 Sign-up Link for Breezometer: 
 https://developers.breezometer.com/signup
 
+-Our location queries are restricted to only places within the UK. This is because the API provider does not provide weather data meeting our requirements for locations outside the UK.
 

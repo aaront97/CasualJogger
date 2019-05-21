@@ -202,7 +202,6 @@ public class Controller {
 
 
         // Drawing the rainmeter
-
         final int outer_r = 65, inner_r = 50;
         final int centre_x = 108, centre_y = 82;
         GraphicsContext gc = rainCanvas.getGraphicsContext2D();
@@ -328,6 +327,7 @@ public class Controller {
         dawnDuskRight.setText("Sunset");
 
         if(currentlyDisplayedDay == 0){
+            //populate Wind Speed, Air Quality, UV Index, Pollen for Today
             windBearing.setVisible(true);
             windBearing.setTranslateX(-15);
             windBearing.setRotate(weatherData.currentWindBearing);
@@ -404,7 +404,13 @@ public class Controller {
 
 
         } else {
+            //populate Wind Speed, Air Quality, UV Index, Pollen
+            //index determines whether to look up the weather data
+            //for tomorrow or two days ahead
             int index = currentlyDisplayedDay - 1;
+
+            //we do not have a wind direction for tomorrow, or the next two days, so we simply hide it
+            //and move it away from view
             windBearing.setVisible(false);
             windBearing.setTranslateX(-1000);
 
@@ -428,6 +434,7 @@ public class Controller {
             String aqiMin = weatherData.minAQITime[index];
             String pollen = weatherData.pollen[index];
 
+            //if the api call limits have been exceeded, then alter text content to show that it has been exceeded
             if(aqiMax == null){
                 airQuality.setStyle("-fx-font: 11 system;");
                 airQuality.setWrapText(true);
@@ -438,6 +445,7 @@ public class Controller {
                 pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
+                //if stil within limits of api calls, then populate air quality and pollen
                 airQuality.setStyle("-fx-font: 11 system;");
                 airQuality.setWrapText(true);
                 System.out.println("Aqi Max: " + aqiMax);
