@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
 
         Controller controller = loader.<Controller>getController();
-        controller.updateWeatherData(weatherData);
+        controller.drawScene(weatherData);
         primaryStage.show();
     }
 

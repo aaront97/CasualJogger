@@ -177,10 +177,10 @@ public class Controller {
             apiAlert.showAndWait();
             return;
         }
-        updateWeatherData(weatherData);
+        drawScene(weatherData);
     }
 
-    public void updateWeatherData(WeatherData weatherData) {
+    public void drawScene(WeatherData weatherData) {
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
                 : weatherData.currentTemperature) + " " + "\u00B0C");
@@ -453,7 +453,7 @@ public class Controller {
             currentlyDisplayedDay = 0;
             tomorrowButton.setSelected(false);
             dayAfterTomorrowButton.setSelected(false);
-            updateWeatherData(weatherData);
+            drawScene(weatherData);
         }
         todayButton.setSelected(true);
     }
@@ -464,7 +464,7 @@ public class Controller {
             currentlyDisplayedDay = 1;
             todayButton.setSelected(false);
             dayAfterTomorrowButton.setSelected(false);
-            updateWeatherData(weatherData);
+            drawScene(weatherData);
         }
         tomorrowButton.setSelected(true);
     }
@@ -475,7 +475,7 @@ public class Controller {
             currentlyDisplayedDay = 2;
             todayButton.setSelected(false);
             tomorrowButton.setSelected(false);
-            updateWeatherData(weatherData);
+            drawScene(weatherData);
         }
         dayAfterTomorrowButton.setSelected(true);
     }
@@ -483,13 +483,13 @@ public class Controller {
     @FXML
     protected void toggleRealFeel() {
         isFeelTemp = !isFeelTemp;
-        updateWeatherData(weatherData);
+        drawScene(weatherData);
     }
 
     @FXML
     void toggleNightMode() {
         isNightMode = !isNightMode;
-        updateWeatherData(weatherData);
+        drawScene(weatherData);
     }
 
     private String extractHourFromString(String date){
