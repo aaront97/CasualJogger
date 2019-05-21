@@ -11,6 +11,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -26,6 +27,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import sample.api.APIReadException;
 import sample.api.DataQuery;
@@ -205,6 +207,12 @@ public class Controller {
         } else {
             toggleRealFeel.setImage(notToggledImage);
         }
+        
+        
+        // Drawing the rainmeter
+        GraphicsContext gc = rainCanvas.getGraphicsContext2D();
+        gc.setFill(Color.DARKRED);
+        gc.fillOval(24, 2, 160, 160);
 
 
         // Setting the notifications text

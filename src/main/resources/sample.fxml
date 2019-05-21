@@ -26,7 +26,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="865.0" prefWidth="302.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <content>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="865.0" prefWidth="300.0">
             <children>
@@ -56,16 +56,16 @@
                                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="1.0" prefHeight="46.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="180.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="1.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                                <RowConstraints maxHeight="193.0" minHeight="10.0" prefHeight="193.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label fx:id="mainTempLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="20C" textAlignment="CENTER">
+                                <Label fx:id="mainTempLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="42.0" prefWidth="102.0" text="20 °C" textAlignment="CENTER">
                                     <font>
                                         <Font size="24.0" />
                                     </font>
                                 </Label>
-                                <Canvas fx:id="rainCanvas" height="179.0" width="184.0" GridPane.rowIndex="1" />
+                                <Canvas fx:id="rainCanvas" height="191.0" width="184.0" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                         <GridPane prefHeight="226.0" prefWidth="117.0">
