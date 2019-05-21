@@ -86,7 +86,8 @@ public class WeatherData {
                 }
             }
 
-            // Pollen scale
+            // Building up the lookup table
+            // That associates quantitative pollen indexes to qualitative descriptions
             pollenLookupTable.put(1, "Very Low");
             pollenLookupTable.put(2, "Low");
             pollenLookupTable.put(3, "Moderate");
