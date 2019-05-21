@@ -5,11 +5,15 @@ Target systems:
 -Computers with Java and JavaFX installed, with Java 8 and higher. 
 
 Running the app:
-We propose the use of IntelliJ to run our weather app.
+We propose the use of IntelliJ to run our weather app (so apiKeys.json can be changed in case you run out of
+API calls).
 -Extract the contents of the zip folder.
 -Ensure IntelliJ, JavaFX, and Java 8+ are installed.
 -Import / Open the project as a Maven project.
 -Once all dependencies are resolved, run the main method of the Main class.
+
+Alternatively, we have shipped a .jar file to make setup easier. However, if API calls do run out, it is not possible
+to modify the apiKeys.json file.
 
 
 External Libraries Used:
