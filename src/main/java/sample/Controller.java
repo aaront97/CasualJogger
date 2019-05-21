@@ -227,7 +227,6 @@ public class Controller {
 
 
         // Setting the notifications text
-
         String display = "";
         if (Math.round(weatherData.currentTemperature) > 30) {
             display += "⚠ High temperature of " + Math.round(weatherData.currentTemperature) + "°C!\n";
