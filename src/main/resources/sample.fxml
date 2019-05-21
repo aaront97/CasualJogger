@@ -65,7 +65,7 @@
                                         <Font size="24.0" />
                                     </font>
                                 </Label>
-                                <Canvas height="179.0" width="184.0" GridPane.rowIndex="1" />
+                                <Canvas fx:id="rainCanvas" height="179.0" width="184.0" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
                         <GridPane prefHeight="226.0" prefWidth="117.0">

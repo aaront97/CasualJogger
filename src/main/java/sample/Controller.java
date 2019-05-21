@@ -10,6 +10,7 @@ import java.util.Locale;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -61,6 +62,9 @@ public class Controller {
 
     @FXML
     Label mainTempLabel;
+    
+    @FXML
+    Canvas rainCanvas;
 
     @FXML
     LineChart lineChartTemp;
