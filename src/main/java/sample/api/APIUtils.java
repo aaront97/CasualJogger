@@ -8,8 +8,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Contains utility functions for the API section.
+ * Since data is not always available, use the extended
+ * versions of jsonObject.get*
+ */
 public class APIUtils {
 
+    /**
+     * @return If jsonObject contains the key, then it tries to retrieve it
+     *         Returns null if key is not contained
+     */
     public static int tryToGetInt(JSONObject jsonObject, String key) {
         if (jsonObject.has(key)) {
             return jsonObject.getInt(key);
@@ -17,6 +26,10 @@ public class APIUtils {
         return 0;
     }
 
+    /**
+     * @return If jsonObject contains the key, then it tries to retrieve it
+     *         Returns null if key is not contained
+     */
     public static double tryToGetDouble(JSONObject jsonObject, String key) {
         if (jsonObject.has(key)) {
             return jsonObject.getDouble(key);
@@ -24,6 +37,10 @@ public class APIUtils {
         return 0;
     }
 
+    /**
+     * @return If jsonObject contains the key, then it tries to retrieve it
+     *         Returns null if key is not contained
+     */
     public static String tryToGetString(JSONObject jsonObject, String key) {
         if (jsonObject.has(key)) {
             return jsonObject.getString(key);
@@ -31,10 +48,19 @@ public class APIUtils {
         return null;
     }
 
+    /**
+     * @param address The address to be queried
+     * @return The JSONObject queried from the website
+     * @throws IOException Network error
+     */
     public static JSONObject getJsonFromUrl(String address) throws IOException {
+
+        // Connecting to the address
         URL url = new URL(address);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
+
+        // Parsing response
         BufferedReader input = new BufferedReader(
                 new InputStreamReader(con.getInputStream())
         );
@@ -43,6 +69,7 @@ public class APIUtils {
         while((line = input.readLine()) != null){
             json_response.append(line);
         }
+
         return new JSONObject(json_response.toString());
     }
 }

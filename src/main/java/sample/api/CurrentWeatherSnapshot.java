@@ -5,26 +5,43 @@ import org.json.JSONObject;
 import java.lang.reflect.Field;
 
 /**
- * Contains weather data about one minute.
- * Only for the next 60 mins.
+ * Contains data about the current weather.
  * Used by DarkSkyAPI.
  */
-public class MinutelyWeatherSnapshot {
+public class CurrentWeatherSnapshot {
 
-    public int time;        // UNIX timestamp
+    public int time;            // In UNIX timestamps
+    public String summary;
+    public String icon;
     public double precipIntensity;
     public double precipProbability;
     public String precipType;
+    public double temperature;
+    public double apparentTemperature;
+    public double windSpeed;
+    public double windBearing;
+    public double cloudCover;
+    public int uvIndex;
+    public double visibility;
 
     /**
      * Populates the data fields from the given JSON object.
      * @param jsonObject Data source in JSONFormat
      */
-    MinutelyWeatherSnapshot(JSONObject jsonObject) {
+    CurrentWeatherSnapshot(JSONObject jsonObject) {
         time = APIUtils.tryToGetInt(jsonObject, "time");
+        summary = APIUtils.tryToGetString(jsonObject, "summary");
+        icon = APIUtils.tryToGetString(jsonObject, "icon");
         precipIntensity = APIUtils.tryToGetDouble(jsonObject, "precipIntensity");
         precipProbability = APIUtils.tryToGetDouble(jsonObject, "precipProbability");
         precipType = APIUtils.tryToGetString(jsonObject, "precipType");
+        temperature = APIUtils.tryToGetDouble(jsonObject, "temperature");
+        apparentTemperature = APIUtils.tryToGetDouble(jsonObject, "apparentTemperature");
+        windSpeed = APIUtils.tryToGetDouble(jsonObject, "windSpeed");
+        windBearing = APIUtils.tryToGetDouble(jsonObject, "windBearing");
+        cloudCover = APIUtils.tryToGetDouble(jsonObject, "cloudCover");
+        uvIndex = APIUtils.tryToGetInt(jsonObject, "uvIndex");
+        visibility = APIUtils.tryToGetDouble(jsonObject, "visibility");
     }
 
     /**
@@ -48,4 +65,5 @@ public class MinutelyWeatherSnapshot {
         s.append("}");
         return s.toString();
     }
+
 }

@@ -4,9 +4,13 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
+/**
+ * Contains weather data about one day.
+ * Used by DarkSkyAPI.
+ */
 public class DailyWeatherSnapshot {
 
-    public int time;
+    public int time;        // In UNIX timestamps
     public String summary;
     public String icon;
     public int sunriseTime;
@@ -29,6 +33,10 @@ public class DailyWeatherSnapshot {
     public int uvIndexTime;
     public double visibility;
 
+    /**
+     * Populates the data fields from the given JSON object.
+     * @param jsonObject Data source in JSONFormat
+     */
     DailyWeatherSnapshot(JSONObject jsonObject) {
         time = APIUtils.tryToGetInt(jsonObject, "time");
         summary = APIUtils.tryToGetString(jsonObject, "summary");
@@ -54,6 +62,10 @@ public class DailyWeatherSnapshot {
         uvIndexTime = APIUtils.tryToGetInt(jsonObject, "uvIndexTime");
     }
 
+    /**
+     * Used for printing out the data contained in the object.
+     * Useful for debugging. System.out.println() uses this form.
+     */
     @Override
     public String toString() {
         Field[] fields = getClass().getFields();

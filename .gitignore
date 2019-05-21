@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 out/
 .idea/
 **/apiKeys.json
 target/
 Thumbs.db
+=======
+out/
+.idea/
+**/apiKeys.json
+target/
+Thumbs.db
+**/META-INF
+>>>>>>> Adds commenting

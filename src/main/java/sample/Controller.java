@@ -27,29 +27,38 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * Defines the behaviour of the UI.
+ */
 public class Controller {
 
+
     private WeatherData weatherData;
+
+    // Toggles on the top right
     private boolean isNightMode = false;
     private boolean isFeelTemp = false;
 
+    // Which day is displayed in the bottom half
     // 0 -> Today, 1 -> Tomorrow, 2 -> The day after tomorrow
     private int currentlyDisplayedDay = 0;
 
+    // Used images are imported as static for efficiency
     private Image toggledImage = new Image(getClass().getClassLoader().getResource("images/toggled.png").toString());
     private Image notToggledImage = new Image(getClass().getClassLoader().getResource("images/notToggled.png").toString());
     private Image ddSun = new Image(getClass().getClassLoader().getResource("images/ddSun.png").toString());
     private Image ddMoon = new Image(getClass().getClassLoader().getResource("images/ddMoon.png").toString());
     private Image ddCross = new Image(getClass().getClassLoader().getResource("images/ddCross.png").toString());
 
+    /**
+     * All FXML UI components that are referenced here
+     */
+
     @FXML
     Label windLabel;
 
     @FXML
     TextField cityName;
-
-    @FXML
-    ToggleButton lowerToggle;
 
     @FXML
     Button refreshButton;
@@ -138,14 +147,14 @@ public class Controller {
     @FXML
     Label WeatherNotificationLabel;
 
-    @FXML
-    protected void ClickMeHandler(Event event) {
-        System.out.println(lowerToggle.isSelected());
-    }
 
+    /**
+     * When the refresh button on the top right corner is pressed
+     */
     @FXML
     protected void refreshHandler(Event event){
 
+        // Start data query with entered city name
         try{
             //try to get the data
             //error-handling code in catch statements to display suitable alert boxes
@@ -155,6 +164,7 @@ public class Controller {
             city = Character.toUpperCase(city.charAt(0)) + city.substring(1, city.length());
             weatherData = DataQuery.queryData(city + ", United Kingdom");
         }
+        // Notify the user via a popup window about any error
         catch(LocationNotFoundException e){
 
             Alert locationAlert = new Alert(Alert.AlertType.ERROR);
@@ -186,22 +196,34 @@ public class Controller {
         drawScene(weatherData);
     }
 
+    /**
+     * Draws the UI elements.
+     * Called every time the data is updated.
+     * @param weatherData Java object containing all the weather data
+     */
     public void drawScene(WeatherData weatherData) {
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
                 : weatherData.currentTemperature) + " " + "\u00B0C");
 
         // Setting the toggles
+        // They are displayed as images
         if (isNightMode) {
             toggleNightMode.setImage(toggledImage);
+
+            // Update styles to night mode
             scrollPane.getScene().getStylesheets().clear();
             scrollPane.getScene().getStylesheets().add(
                     getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
-        } else {            toggleNightMode.setImage(toggledImage);
+
+        } else {
             toggleNightMode.setImage(notToggledImage);
+
+            // Update styles to light mode
             scrollPane.getScene().getStylesheets().clear();
             scrollPane.getScene().getStylesheets().add(
                     getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
+
         if (isFeelTemp) {
             toggleRealFeel.setImage(toggledImage);
         } else {
@@ -267,27 +289,36 @@ public class Controller {
 
 
         // Setting the label above the graph and the summary to displayed day
+        // Fiddling with calendar and date objects to get day after tomorrow's date
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, 2);
         String dayAfterTomorrow = c.get(Calendar.DAY_OF_MONTH) + " " +
                 c.getDisplayName(Calendar.MONTH, Calendar.SHORT, Locale.UK);
+
+        // The possible texts for the three days
         String[] possibleGraphTexts = {"Today", "Tomorrow", dayAfterTomorrow};
         String[] possibleSummaryTexts = {"Now", "Tomorrow's summary", dayAfterTomorrow + "'s summary"};
+
+        // Setting the labels accordingly to currently displayed day
         chartDayLabel.setText(possibleGraphTexts[currentlyDisplayedDay] + "'s temperature and precipitation");
         summaryLabel.setText(possibleSummaryTexts[currentlyDisplayedDay]);
 
-        // Populate temperature graph
+        // There are two charts on top of each other
+
+        // Populating temperature graph with either real or feel temperature
         double[][] temperatureSource = isFeelTemp ? weatherData.apparentTemperatureForecast : weatherData.temperatureForecast;
         XYChart.Series<String, Double> lineSeries = new XYChart.Series<>();
         for (int i = 0; i < 24; i++) {
+            // Labels are "4:00, 21:00, ..."
             String label = i+":00";
             lineSeries.getData().add(new XYChart.Data<>(label, temperatureSource[currentlyDisplayedDay][i]));
         }
+        // Updating the series displayed on the temperature graph
         lineChartTemp.getData().clear();
         lineChartTemp.getData().add(lineSeries);
 
-        // Populate bar chart
+        // Populating bar chart
         barChartYAxis.setAutoRanging(false);
         barChartYAxis.setUpperBound(1);
         XYChart.Series<String, Double> barSeries = new XYChart.Series<>();
@@ -295,8 +326,10 @@ public class Controller {
             String label = i+":00";
             barSeries.getData().add(new XYChart.Data<>(label, weatherData.precipitationForecast[currentlyDisplayedDay][i]));
         }
+        // Updating the series displayed on the temperature graph
         barChartPrecip.getData().clear();
         barChartPrecip.getData().add(barSeries);
+        // Setting the bars to fill the graph in width
         barChartPrecip.setBarGap(0);
         barChartPrecip.setCategoryGap(0);
 
@@ -458,7 +491,6 @@ public class Controller {
             }
             else{
                 //if still within limits of api calls, then populate air quality and pollen
-                System.out.println("Aqi Max: " + aqiMax);
 
                 //format the date
                 SimpleDateFormat parsingFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -489,14 +521,20 @@ public class Controller {
         }
     }
 
-
-
+    /**
+     *  Event handlers for the 3 day selector buttons
+     */
     @FXML
     protected void todayButtonClicked() {
         if (currentlyDisplayedDay != 0) {
+            // Update currently displayed date
             currentlyDisplayedDay = 0;
+
+            // Setting all other date toggle buttons false
             tomorrowButton.setSelected(false);
             dayAfterTomorrowButton.setSelected(false);
+
+            // Redraw scene to show selected date
             drawScene(weatherData);
         }
         todayButton.setSelected(true);
@@ -505,9 +543,14 @@ public class Controller {
     @FXML
     protected void tomorrowButtonClicked() {
         if (currentlyDisplayedDay != 1) {
+            // Update currently displayed date
             currentlyDisplayedDay = 1;
+
+            // Setting all other date toggle buttons false
             todayButton.setSelected(false);
             dayAfterTomorrowButton.setSelected(false);
+
+            // Redraw scene to show selected date
             drawScene(weatherData);
         }
         tomorrowButton.setSelected(true);
@@ -516,14 +559,22 @@ public class Controller {
     @FXML
     protected void dayAfterTomorrowButtonClicked() {
         if (currentlyDisplayedDay != 2) {
+            // Update currently displayed date
             currentlyDisplayedDay = 2;
+
+            // Setting all other date toggle buttons false
             todayButton.setSelected(false);
             tomorrowButton.setSelected(false);
+
+            // Redraw scene to show selected date
             drawScene(weatherData);
         }
         dayAfterTomorrowButton.setSelected(true);
     }
 
+    /**
+     * Event handlers for the two toggle "buttons" (images) on the top right
+     */
     @FXML
     protected void toggleRealFeel() {
         isFeelTemp = !isFeelTemp;
@@ -535,7 +586,6 @@ public class Controller {
         isNightMode = !isNightMode;
         drawScene(weatherData);
     }
-
 
     private Color precipColor(double probability) {
         if (isNightMode) {

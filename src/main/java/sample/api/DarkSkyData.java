@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class DarkSkyData {
 
-    public CurrentWeatherSnapshat currently;
+    public CurrentWeatherSnapshot currently;
     public ArrayList<MinutelyWeatherSnapshot> minutely;
     public ArrayList<HourlyWeatherSnapshot> hourly;
     public ArrayList<DailyWeatherSnapshot> daily;
@@ -20,7 +20,7 @@ public class DarkSkyData {
     DarkSkyData(JSONObject jsonObject) throws LocationOutOfReachException {
 
         try {
-            currently = new CurrentWeatherSnapshat(jsonObject.getJSONObject("currently"));
+            currently = new CurrentWeatherSnapshot(jsonObject.getJSONObject("currently"));
 
             {
                 minutely = new ArrayList<>();

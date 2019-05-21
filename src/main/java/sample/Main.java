@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 import sample.api.DataQuery;
 import sample.api.WeatherData;
 
+/**
+ * Mostly boilerplate code for launching a JavaFX application.
+ */
 public class Main extends Application {
 
     @Override
@@ -16,16 +19,20 @@ public class Main extends Application {
         WeatherData weatherData = DataQuery.queryData("London");
         System.out.println(weatherData);
 
+        // Loading FXML file with UI components
         FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("sample.fxml"));
 
-        //System.out.println(Controller.extractHourFromTimestamp((long)weatherData.maxWindSpeedForecast[1]));
+        // Creating window and inflating FXML
         primaryStage.setTitle("CasualJogger");
         Scene scene = new Scene(loader.load(), 315, 540);
         scene.getStylesheets().add(getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
         primaryStage.setScene(scene);
 
+        // Draw scene on startup with queried data
         Controller controller = loader.<Controller>getController();
         controller.drawScene(weatherData);
+
+        // Show window
         primaryStage.show();
     }
 
