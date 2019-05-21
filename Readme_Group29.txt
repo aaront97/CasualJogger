@@ -13,7 +13,7 @@ API calls).
 -Once all dependencies are resolved, run the main method of the Main class.
 
 Alternatively, we have shipped a .jar file to make setup easier. However, if API calls do run out, it is not possible
-to modify the apiKeys.json file.
+to modify the apiKeys.json file since the apiKeys are hardbaked into the .jar.
 
 
 External Libraries Used:
@@ -27,7 +27,7 @@ Issues:
 -Due to there being a limit on how many API calls are sent to the API provider each day, there might be a chance that the application will throw an error message or show unexpected results as a result of prolonged use. One important thing to note is that the air quality and pollen information provider, Breezometer, imposes a very low limit on the number of API calls (9-10 each day). 
 
 If this happens, an error message 'API Call Limit Has been exceeded' will be shown on the weather app.
-To handle this, create a new account with Breezometer and replace the Breezometer variable in the apiKeys.json file. 
+To handle this, create a new account with Breezometer and replace the Breezometer variable in the Controller.class file.
 This hindrance is due to the financial constraints imposed on this project. 
 
 Sign-up Link for Breezometer: 

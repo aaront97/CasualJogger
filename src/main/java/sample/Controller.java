@@ -145,10 +145,18 @@ public class Controller {
 
     @FXML
     protected void refreshHandler(Event event){
+
         try{
-            weatherData = DataQuery.queryData(cityName.getText() + ", United Kingdom");
+            //try to get the data
+            //error-handling code in catch statements to display suitable alert boxes
+            String city = cityName.getText();
+
+            //capitalise the first word
+            city = Character.toUpperCase(city.charAt(0)) + city.substring(1, city.length());
+            weatherData = DataQuery.queryData(city + ", United Kingdom");
         }
         catch(LocationNotFoundException e){
+
             Alert locationAlert = new Alert(Alert.AlertType.ERROR);
             locationAlert.setTitle("Location Not Found");
             locationAlert.setContentText("Sorry, we can't find weather data for " +
@@ -326,24 +334,28 @@ public class Controller {
         dawnDuskRight.setText("Sunset");
 
         if(currentlyDisplayedDay == 0){
-            //populate Wind Speed, Air Quality, UV Index, Pollen for Today
+
+            //bring the windBearing logo to view
             windBearing.setVisible(true);
             windBearing.setTranslateX(-15);
+            //rotation logic to match wind direction
             windBearing.setRotate(weatherData.currentWindBearing);
 
+            //populate Wind Speed, Air Quality, UV Index, Pollen for Today
             windSpeed.setTranslateX(-10);
             windSpeed.setStyle("-fx-font: 20 system;");
-            windSpeed.setText("   " + Math.round(weatherData.currentWindSpeed) + " mph");
-
             uvIndex.setStyle("-fx-font: 20 system;");
+
+            windSpeed.setText("   " + Math.round(weatherData.currentWindSpeed) + " mph");
             uvIndex.setText(weatherData.currentUV + "");
 
             boolean apiCallLimitExceeded = weatherData.currentAQI == 0 ? true : false;
 
             if(apiCallLimitExceeded){
                 airQuality.setStyle("-fx-font: 11 system;");
-                airQuality.setText("API Call Limit\n Exceeded");
                 pollenCount.setStyle("-fx-font: 11 system;");
+
+                airQuality.setText("API Call Limit\n Exceeded");
                 pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
@@ -413,10 +425,17 @@ public class Controller {
             windBearing.setVisible(false);
             windBearing.setTranslateX(-1000);
 
-
-            windSpeed.setStyle("-fx-font: 11 system;");
+            //formatting the text fields
+            airQuality.setWrapText(true);
             windSpeed.setWrapText(true);
+            uvIndex.setWrapText(true);
+            pollenCount.setWrapText(true);
+            airQuality.setStyle("-fx-font: 11 system;");
+            windSpeed.setStyle("-fx-font: 11 system;");
+            uvIndex.setStyle("-fx-font: 11 system;");
+            pollenCount.setStyle("-fx-font: 11 system;");
 
+            //formatting the hour
             SimpleDateFormat format = new SimpleDateFormat("h a");     // (1-12) am/pm
             windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + " mph at "
                     + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + " \n" +
@@ -424,8 +443,7 @@ public class Controller {
                     + format.format(new Date((long)weatherData.minWindSpeedTime[index] * 1000)));
 
 
-            uvIndex.setStyle("-fx-font: 11 system;");
-            uvIndex.setWrapText(true);
+
             uvIndex.setText("Max: " + Math.round(weatherData.maxUVForecast[index]) +" at "
                     + format.format(new Date((long)weatherData.maxUVTime[index] * 1000)));
 
@@ -435,19 +453,14 @@ public class Controller {
 
             //if the api call limits have been exceeded, then alter text content to show that it has been exceeded
             if(aqiMax == null){
-                airQuality.setStyle("-fx-font: 11 system;");
-                airQuality.setWrapText(true);
                 airQuality.setText("API Call Limit\nExceeded");
-
-                pollenCount.setStyle("-fx-font: 11 system;");
-                pollenCount.setWrapText(true);
                 pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
-                //if stil within limits of api calls, then populate air quality and pollen
-                airQuality.setStyle("-fx-font: 11 system;");
-                airQuality.setWrapText(true);
+                //if still within limits of api calls, then populate air quality and pollen
                 System.out.println("Aqi Max: " + aqiMax);
+
+                //format the date
                 SimpleDateFormat parsingFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
                 try {
                     airQuality.setText("Max: " + Math.round(weatherData.maxAQIForecast[index]) + " at "
@@ -457,9 +470,6 @@ public class Controller {
                 } catch (java.text.ParseException e) {
                     e.printStackTrace();
                 }
-
-                pollenCount.setStyle("-fx-font: 11 system;");
-                pollenCount.setWrapText(true);
                 pollenCount.setText(pollen);
             }
 
@@ -526,12 +536,6 @@ public class Controller {
         drawScene(weatherData);
     }
 
-    private static String extractHourFromString(String date){
-        String time = date.split("T")[1];
-        int hour = Integer.parseInt(time.substring(0,2));
-        String result = hour + " h";
-        return result;
-    }
 
     private Color precipColor(double probability) {
         if (isNightMode) {

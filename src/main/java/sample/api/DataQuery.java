@@ -23,9 +23,6 @@ public class DataQuery {
             googleKey = apiKeys.getString("google");
         } catch (Exception e) {
             throw new APIReadException();
-//            System.out.println("An error while reading API keys from JSON");
-//            e.printStackTrace();
-//            return null;
         }
 
         GoogleAPI googleAPI = new GoogleAPI(googleKey);
@@ -34,6 +31,7 @@ public class DataQuery {
             latLonInfo = googleAPI.getCoord(cityName);
         }
         catch(LocationNotFoundException e){
+            //throw the exception in order to be handled by the Controller object
             throw new LocationNotFoundException(e.getMessage());
         }
 
@@ -47,6 +45,7 @@ public class DataQuery {
             weatherData = new WeatherData(darkSkyData, breezometerAPI);
         }
         catch(LocationOutOfReachException e){
+            //throw the exception in order to be handled by the Controller object
             throw new LocationOutOfReachException();
         }
         weatherData.location = latLonInfo.address;

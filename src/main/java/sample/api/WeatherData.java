@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class WeatherData {
-
+    //associates quantitative pollen indexes to qualitative descriptions
     private static final HashMap<Integer, String> pollenLookupTable = new HashMap<>();
+
     public String location;
 
     public int timestamp;
@@ -59,7 +60,7 @@ public class WeatherData {
         currentWindBearing = darkSkyData.currently.windBearing;
         currentUV = darkSkyData.currently.uvIndex;
 
-        //BREEZOMETER COMMENTED DAILY LIMIT EXCEEDED
+        //START OF BREEZOMETER
 
         try {
             currentAQI = breezometerData.getCurrentAirQuality();
@@ -75,7 +76,8 @@ public class WeatherData {
                 }
             }
 
-            //POLLEN
+            //building up the lookup table
+            //that associates quantitative pollen indexes to qualitative descriptions
             pollenLookupTable.put(1, "Very Low");
             pollenLookupTable.put(2, "Low");
             pollenLookupTable.put(3, "Moderate");
@@ -105,6 +107,7 @@ public class WeatherData {
         //END OF BREEZOMETER
 
         if(darkSkyData.minutely.size() == 0){
+            //a null field for minutely indicates that the location is outside the UK
             throw new LocationOutOfReachException();
         }
 
@@ -114,7 +117,7 @@ public class WeatherData {
 
 
 
-        int[] cur = {0};    // Stupid lambda-expressions and final variables...
+        int[] cur = {0};    // lambda-expressions and final variables...
         darkSkyData.previous.forEach((HourlyWeatherSnapshot snapshot) -> {
             temperatureForecast[0][cur[0]] = snapshot.temperature;
             apparentTemperatureForecast[0][cur[0]] = snapshot.apparentTemperature;
