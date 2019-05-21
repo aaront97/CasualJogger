@@ -1,5 +1,12 @@
 package sample;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -7,20 +14,23 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Line;
-import sample.api.*;
-
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import sample.api.APIReadException;
+import sample.api.DataQuery;
+import sample.api.LocationNotFoundException;
+import sample.api.LocationOutOfReachException;
+import sample.api.WeatherData;
 
 public class Controller {
 
@@ -36,9 +46,6 @@ public class Controller {
     private Image ddSun = new Image(getClass().getClassLoader().getResource("images/ddSun.png").toString());
     private Image ddMoon = new Image(getClass().getClassLoader().getResource("images/ddMoon.png").toString());
     private Image ddCross = new Image(getClass().getClassLoader().getResource("images/ddCross.png").toString());
-
-
-
 
     @FXML
     Label windLabel;
@@ -141,7 +148,7 @@ public class Controller {
     @FXML
     protected void refreshHandler(Event event){
         try{
-           weatherData = DataQuery.queryData(cityName.getText() + ", United Kingdom");
+            weatherData = DataQuery.queryData(cityName.getText() + ", United Kingdom");
         }
         catch(LocationNotFoundException e){
             Alert locationAlert = new Alert(Alert.AlertType.ERROR);
@@ -165,7 +172,7 @@ public class Controller {
             Alert apiAlert = new Alert(Alert.AlertType.ERROR);
             apiAlert.setTitle("API Error");
             apiAlert.setContentText("Sorry, we encountered an error while getting our data. Please read the README file " +
-                            "and enter a valid API key for each API provider" );
+                    "and enter a valid API key for each API provider" );
             apiAlert.setHeaderText(null);
             apiAlert.showAndWait();
             return;
@@ -173,12 +180,10 @@ public class Controller {
         updateWeatherData(weatherData);
     }
 
-    @FXML
     public void updateWeatherData(WeatherData weatherData) {
-
         this.weatherData = weatherData;
         mainTempLabel.setText(Math.round(isFeelTemp ? weatherData.currentApparentTemperature
-                                                    : weatherData.currentTemperature) + " " + "\u00B0C");
+                : weatherData.currentTemperature) + " " + "\u00B0C");
 
         // Setting the toggles
         if (isNightMode) {
@@ -187,10 +192,10 @@ public class Controller {
             scrollPane.getScene().getStylesheets().add(
                     getClass().getClassLoader().getResource("stylesheets/medina_dark.css").toString());
         } else {            toggleNightMode.setImage(toggledImage);
-            toggleNightMode.setImage(notToggledImage);
-            scrollPane.getScene().getStylesheets().clear();
-            scrollPane.getScene().getStylesheets().add(
-                    getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
+        toggleNightMode.setImage(notToggledImage);
+        scrollPane.getScene().getStylesheets().clear();
+        scrollPane.getScene().getStylesheets().add(
+                getClass().getClassLoader().getResource("stylesheets/lightMode.css").toString());        }
         if (isFeelTemp) {
             toggleRealFeel.setImage(toggledImage);
         } else {
@@ -310,10 +315,10 @@ public class Controller {
             boolean apiCallLimitExceeded = weatherData.currentAQI == 0 ? true : false;
 
             if(apiCallLimitExceeded){
-               airQuality.setStyle("-fx-font: 11 system;");
-               airQuality.setText("API Call Limit\n Exceeded");
-               pollenCount.setStyle("-fx-font: 11 system;");
-               pollenCount.setText("API Call Limit\nExceeded");
+                airQuality.setStyle("-fx-font: 11 system;");
+                airQuality.setText("API Call Limit\n Exceeded");
+                pollenCount.setStyle("-fx-font: 11 system;");
+                pollenCount.setText("API Call Limit\nExceeded");
             }
             else{
                 airQuality.setText(Math.round(weatherData.currentAQI) + "");
@@ -382,9 +387,9 @@ public class Controller {
 
             SimpleDateFormat format = new SimpleDateFormat("h a");     // (1-12) am/pm
             windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + "mph at "
-                                    + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + " \n" +
-                              "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at "
-                                    + format.format(new Date((long)weatherData.minWindSpeedTime[index] * 1000)));
+                    + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + " \n" +
+                    "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at "
+                    + format.format(new Date((long)weatherData.minWindSpeedTime[index] * 1000)));
 
 
             uvIndex.setStyle("-fx-font: 11 system;");
