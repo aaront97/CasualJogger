@@ -246,7 +246,7 @@ public class Controller {
             display += "⚠ Low temperature of " + Math.round(weatherData.currentTemperature) + "°C!\n";
         }
         if (Math.round(weatherData.currentWindSpeed) > 20) {
-            display += "⚠ Strong winds of " + Math.round(weatherData.currentWindSpeed) + "mph!\n";
+            display += "⚠ Strong winds of " + Math.round(weatherData.currentWindSpeed) + " mph!\n";
         }
         if (Math.round(weatherData.currentUV) > 3) {
             display += "⚠ High UV Index of " + Math.round(weatherData.currentUV) + "!\n";
@@ -341,7 +341,7 @@ public class Controller {
 
             windSpeed.setTranslateX(-10);
             windSpeed.setStyle("-fx-font: 20 system;");
-            windSpeed.setText(Math.round(weatherData.currentWindSpeed) + "mph");
+            windSpeed.setText("   " + Math.round(weatherData.currentWindSpeed) + " mph");
 
             uvIndex.setStyle("-fx-font: 20 system;");
             uvIndex.setText(weatherData.currentUV + "");
@@ -420,9 +420,9 @@ public class Controller {
             windSpeed.setWrapText(true);
 
             SimpleDateFormat format = new SimpleDateFormat("h a");     // (1-12) am/pm
-            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + "mph at "
+            windSpeed.setText("Max: " + Math.round(weatherData.maxWindSpeedForecast[index]) + " mph at "
                     + format.format(new Date((long)weatherData.maxWindSpeedTime[index] * 1000)) + " \n" +
-                    "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + "mph at "
+                    "Min: " + Math.round(weatherData.minWindSpeedForecast[index]) + " mph at "
                     + format.format(new Date((long)weatherData.minWindSpeedTime[index] * 1000)));
 
 

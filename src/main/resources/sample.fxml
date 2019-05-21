@@ -238,11 +238,11 @@
                                             </font></Label>
                                         <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
                                             <children>
-                                                <ImageView fx:id="windBearing" fitHeight="57.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" translateX="-15.0">
+                                                <ImageView fx:id="windBearing" fitHeight="57.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" translateX="-28.0" translateY="-10.0">
                                                     <image>
                                                         <Image url="@images/windBearing.png" />
                                                     </image></ImageView>
-                                                <Label fx:id="windSpeed" alignment="CENTER" text="Label" textAlignment="CENTER" translateX="-10.0">
+                                                <Label fx:id="windSpeed" alignment="CENTER" text="Label" textAlignment="CENTER" translateX="5.0">
                                                     <font>
                                                         <Font size="12.0" />
                                                     </font>
